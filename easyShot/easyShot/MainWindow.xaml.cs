@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 
+using easyShot.ViewModels;
+
 namespace easyShot
 {
     /// <summary>
@@ -10,6 +12,17 @@ namespace easyShot
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new SettingViewModel();
+        }
+
+        private void Setting_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new SettingViewModel();
+        }
+
+        private void Cloud_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new CloudViewModel();
         }
     }
 }
