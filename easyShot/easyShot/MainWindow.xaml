@@ -4,9 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:easyShot"
+        xmlns:viewmodels="clr-namespace:easyShot.ViewModels"
+        xmlns:views="clr-namespace:easyShot.Views"
         mc:Ignorable="d"
         Title="EasyShot" Height="450" Width="800">
     <Window.Resources>
+        <DataTemplate x:Name="settingViewTemplate" DataType="{x:Type viewmodels:SettingViewModel}">
+            <views:SettingView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="cloudViewTemplate" DataType="{x:Type viewmodels:CloudViewModel}">
+            <views:CloudView DataContext="{Binding}"/>
+        </DataTemplate>
         <Style x:Key="NavigationButton" TargetType="Button">
             <Style.Setters>
                 <Setter Property="Control.FontFamily" Value="Times New Roman" />
@@ -70,11 +78,13 @@
         </Style>
     </Window.Resources>
     <Grid Background="#FF3C324E">
+
         <DockPanel HorizontalAlignment="Left" Height="400.4" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Width="502.574">
             <Grid Height="55.162" VerticalAlignment="Top" Width="502.381">
-                <Button Style="{StaticResource ResourceKey=NavigationButton}" Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="82.143" Height="35.162" BorderThickness="0"/>
-                <Button Style="{StaticResource ResourceKey=NavigationButton}" Content="Button" HorizontalAlignment="Left" Margin="92.143,10,0,0" VerticalAlignment="Top" Width="82.143" Height="35.162" BorderThickness="0"/>
-                <Button Content="Button" HorizontalAlignment="Left" Margin="174.286,10,0,0" VerticalAlignment="Top" Width="82.143" Height="35.162" BorderThickness="0" Background="#FF7F6F8C"/>
+                <Button Style="{StaticResource ResourceKey=NavigationButton}" Content="设置" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="82.143" Height="35.162" BorderThickness="0" Click="Setting_Click"/>
+                <Button Style="{StaticResource ResourceKey=NavigationButton}" Content="云端" HorizontalAlignment="Left" Margin="92.143,10,0,0" VerticalAlignment="Top" Width="82.143" Height="35.162" BorderThickness="0" Click="Cloud_Click"/>
+                <Button Content="截图" HorizontalAlignment="Right" Margin="174.286,10,20,0" VerticalAlignment="Top" Width="82.143" Height="35.162" BorderThickness="0" Background="#FF7F6F8C" FontFamily="Times New Roman" FontSize="16"/>
+                <ContentControl Content="{Binding}" HorizontalAlignment="Center" Margin="10,65.7,0,-332.978" VerticalAlignment="Center" Height="320" Width="480"/>
             </Grid>
         </DockPanel>
 

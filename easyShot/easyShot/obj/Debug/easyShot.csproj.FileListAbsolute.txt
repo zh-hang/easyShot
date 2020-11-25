@@ -13,3 +13,8 @@ E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot.csproj.Gene
 E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot.csproj.CoreCompileInputs.cache
 E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot.exe
 E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot.pdb
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\Views\CloudView.g.cs
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\Views\SettingView.g.cs
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\Views\CloudView.baml
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\Views\SettingView.baml
