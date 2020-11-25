@@ -89,7 +89,9 @@
                     </MenuItem>
                 </Menu>
             </Grid>
-            <ContentControl Content="{Binding}" HorizontalAlignment="Center" Margin="-500,131,0,80.4" VerticalAlignment="Center" Height="320" Width="480" Foreground="{x:Null}"/>
+            <ContentControl Content="{Binding}" HorizontalAlignment="Center" Margin="-500,131,0,80.4" VerticalAlignment="Center" Height="320" Width="480" Foreground="{x:Null}" MinWidth="480" MinHeight="320">
+               
+            </ContentControl>
         </DockPanel>
         <ScrollViewer HorizontalAlignment="Left" Height="400" Margin="517.574,10,0,0" VerticalAlignment="Top" Width="270" Background="#FF2E1F3C">
             <ListView Height="392" Width="244.6" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
