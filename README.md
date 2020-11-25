@@ -2,17 +2,45 @@
 
 A windows screenshot app with C#
 
+## 结构
 
+### setting
 
-##### 参考资料：
+#### 常规
 
-###### books:
+- 文件保存路径
+- 文件名
+
+#### 启动
+
+- 开机自启
+
+### cloud
+
+#### 登录
+
+- 账号
+- 密码
+
+- 服务器地址
+
+### shot
+
+- 全屏截图
+- 区域截图
+- 圆形截图
+
+### picture
+
+## 参考资料：
+
+### books:
 
 C# 7.0核心技术指南
 
 深入浅出C#
 
-###### WPF:
+### WPF:
 
 [WPF快速入门系列(1)——WPF布局概览](https://www.cnblogs.com/zhili/p/WPFLayout.html)
 

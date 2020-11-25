@@ -1,0 +1,15 @@
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\bin\Debug\easyShot.exe.config
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\bin\Debug\easyShot.exe
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\bin\Debug\easyShot.pdb
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot.csprojAssemblyReference.cache
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\MainWindow.g.cs
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\App.g.cs
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot_MarkupCompile.cache
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot_MarkupCompile.lref
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\MainWindow.baml
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot.g.resources
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot.Properties.Resources.resources
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot.csproj.GenerateResource.cache
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot.csproj.CoreCompileInputs.cache
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot.exe
+E:\mywork\codes\csharp\easyShot\easyShot\easyShot\obj\Debug\easyShot.pdb
