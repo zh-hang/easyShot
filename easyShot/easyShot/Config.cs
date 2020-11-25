@@ -1,11 +1,4 @@
-﻿
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
+﻿using System.Configuration;
 //simple is perfect!
 namespace EasyShot
 {
@@ -47,7 +40,7 @@ namespace EasyShot
         {
             this.shotFilePath = config.AppSettings.Settings[shotfilepathlabel].Value;
         }
-        public string getShotFilePath() 
+        public string getShotFilePath()
         {
             return this.shotFilePath;
         }
@@ -71,7 +64,7 @@ namespace EasyShot
         public void setStartMode(StartMode NewStartMode)
         {
             this.startMode = NewStartMode;
-            if(NewStartMode== EasyShot.StartMode.StartAutomaticallty)
+            if (NewStartMode == EasyShot.StartMode.StartAutomaticallty)
                 this.config.AppSettings.Settings[startmodelabel].Value = ConfigManager.startautomaticallty;
             if (NewStartMode == EasyShot.StartMode.StartManually)
                 this.config.AppSettings.Settings[startmodelabel].Value = ConfigManager.startmanually;
