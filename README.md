@@ -14,6 +14,7 @@ A windows screenshot app with C#
 
 - 文件保存路径
 - 文件名
+- 截图时隐藏该窗口
 
 #### 启动
 
