@@ -73,7 +73,6 @@
         </Style>
     </Window.Resources>
     <Grid Background="#FF3C324E">
-
         <DockPanel HorizontalAlignment="Left" Height="400.4" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Width="502.574">
             <Grid Height="55.162" VerticalAlignment="Top" Width="502.381">
                 <Button Style="{StaticResource ResourceKey=NavigationButton}" Content="设置" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="82.143" Height="35.162" BorderThickness="0" Click="Setting_Click"/>
@@ -93,14 +92,17 @@
                 <ContentControl Content="{Binding}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Height="320" Width="480" Foreground="{x:Null}" MinWidth="480" MinHeight="320"/>
             </DockPanel>
         </DockPanel>
-        <ScrollViewer HorizontalAlignment="Left" Height="400" Margin="517.574,10,0,0" VerticalAlignment="Top" Width="270" Background="#FF2E1F3C">
-            <ListView Height="392" Width="244.6" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+        <ScrollViewer HorizontalAlignment="Left" Height="400" Margin="517.574,10,0,0" VerticalAlignment="Top" Width="270" Background="#FF2E1F3C" PanningMode="Both">
+            <StackPanel Width="250">
+                <ListBox Name="lstImg" Width="Auto" Height="200">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Image Stretch="Uniform" Source="{Binding Path=image}">
+                            </Image>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
         </ScrollViewer>
 
     </Grid>
