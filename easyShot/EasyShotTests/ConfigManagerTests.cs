@@ -14,71 +14,46 @@ namespace EasyShot.Tests
         [TestMethod()]
         public void ConfigManagerTest()
         {
-            
-
-        }
-
-        [TestMethod()]
-        public void unitTestTest()
-        {
             Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void loadShotFilePathTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void getShotFilePathTest()
-        {
-            ConfigManager configManager = new ConfigManager();
-            EasyShot.ShotMode shotMode = configManager.getShotMode();
-            //System.Console.WriteLine("the shot mode is " + shotMode);
-
         }
 
         [TestMethod()]
         public void setShotFilePathTest()
         {
-            Assert.Fail();
+            string newfilepath = "asdfg";
+            ConfigManager configManager = new ConfigManager();
+            configManager.setShotFilePath(newfilepath);
+            Assert.AreEqual(newfilepath, configManager.getshotfilepath());
         }
 
         [TestMethod()]
         public void loadStartModeTest()
         {
-            Assert.Fail();
+            ConfigManager configManager = new ConfigManager();
+            Assert.AreEqual(EasyShot.StartMode.StartAutomaticallty, configManager.getStartMode());
         }
 
         [TestMethod()]
-        public void getStartModeTest()
+        public void loadShotFilePathTest()
         {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void setStartModeTest()
-        {
-            Assert.Fail();
+            ConfigManager configManager = new ConfigManager();
+            Assert.AreEqual("abcd", configManager.getshotfilepath());
         }
 
         [TestMethod()]
         public void loadShotModeTest()
         {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void getShotModeTest()
-        {
-            Assert.Fail();
+            ConfigManager configManager = new ConfigManager();
+            Assert.AreEqual(EasyShot.ShotMode.ShotSquare, configManager.getShotMode());
         }
 
         [TestMethod()]
         public void setShotModeTest()
         {
-            Assert.Fail();
+            EasyShot.ShotMode newshotmode = EasyShot.ShotMode.ShotSquare;
+            ConfigManager configManager = new ConfigManager();
+            configManager.setShotMode(newshotmode);
+            Assert.AreEqual(newshotmode, configManager.getShotMode());
         }
     }
 }
