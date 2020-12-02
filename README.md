@@ -2,6 +2,10 @@
 
 A windows screenshot app with C#
 
+## todo
+
+- [ ] 接口调用说明。在readme或者新开一个文档。[张航]
+
 ## 结构
 
 ### setting

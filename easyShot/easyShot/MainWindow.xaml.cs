@@ -9,20 +9,24 @@ namespace easyShot
     /// </summary>
     public partial class MainWindow : Window
     {
+        SettingViewModel setting;
+        CloudViewModel cloud;
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new SettingViewModel();
+            setting = new SettingViewModel();
+            cloud = new CloudViewModel();
+            DataContext = setting;
         }
 
         private void Setting_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new SettingViewModel();
+            DataContext = setting;
         }
 
         private void Cloud_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new CloudViewModel();
+            DataContext = cloud;
         }
     }
 }
