@@ -7,7 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Width="480" Height="320">
     <Grid Width="480" Height="320" Background="#FF70627C">
-        <TextBlock HorizontalAlignment="Left" Margin="158.1,151.8,0,0" TextWrapping="Wrap" Text="这里是云端" VerticalAlignment="Top" Foreground="White"/>
+        <TextBlock Foreground="Black" HorizontalAlignment="Left" TextWrapping="Wrap" Text="连接" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="18" FontFamily="Times New Roman"/>
+        <Line X1="10" Y1="35" X2="210" Y2="35" Stroke="Black" StrokeThickness="1"/>
+        <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,47.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22.44" Width="120" FontSize="16" FontFamily="Times New Roman" Text="账号" />
+        <TextBox HorizontalAlignment="Left" Height="22.44" Margin="130,46.8,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16"/>
+        <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,104.68,0,0" TextWrapping="Wrap" Text="服务器地址" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
+        <Button Content="连接" HorizontalAlignment="Left" Margin="365.8,102.16,0,0" VerticalAlignment="Top" Width="78.2" Height="23.44" FontFamily="Times New Roman" FontSize="16" RenderTransformOrigin="0.488,2.09"/>
+        <TextBox HorizontalAlignment="Left" Height="22.44" Margin="130,103.68,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16"/>
+        <TextBlock Foreground="Black" HorizontalAlignment="Left" TextWrapping="Wrap" Text="备份" VerticalAlignment="Top" Margin="10,137.28,0,0" FontSize="18" FontFamily="Times New Roman"/>
+        <Line X1="10" Y1="35" X2="210" Y2="35" Stroke="Black" StrokeThickness="1" Margin="0,127.28,0,-127.28"/>
+        <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,176.573,0,0" TextWrapping="Wrap" Text="自动备份" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
+        <CheckBox Content="是" HorizontalAlignment="Left" Margin="130,176.573,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.021,-1.378" Height="18.4" Width="81.595" FontSize="14" FontFamily="Times New Roman"/>
+        <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,76.24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22.44" Width="120" FontSize="16" FontFamily="Times New Roman" Text="密码" />
+        <TextBox HorizontalAlignment="Left" Height="22.44" Margin="130,75.24,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16"/>
 
     </Grid>
 </UserControl>
