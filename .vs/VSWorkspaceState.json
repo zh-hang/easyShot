@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\easyShot\\easyShot\\bin"
+    "\\easyShot",
+    "\\easyShot\\easyShot"
   ],
-  "SelectedNode": "\\easyShot",
+  "SelectedNode": "\\easyShot\\easyShot\\App.config",
   "PreviewInSolutionExplorer": false
 }
