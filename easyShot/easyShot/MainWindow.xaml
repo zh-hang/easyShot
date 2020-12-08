@@ -10,12 +10,12 @@
         mc:Ignorable="d"
         Title="EasyShot" Height="450" Width="800">
     <Window.Resources>
-        <DataTemplate x:Name="settingViewTemplate" DataType="{x:Type viewmodels:SettingViewModel}">
+        <!--<DataTemplate x:Name="settingViewTemplate" DataType="{x:Type viewmodels:SettingViewModel}">
             <views:SettingView DataContext="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Name="cloudViewTemplate" DataType="{x:Type viewmodels:CloudViewModel}">
             <views:CloudView DataContext="{Binding}"/>
-        </DataTemplate>
+        </DataTemplate>-->
 
         <Style x:Key="NavigationButton" TargetType="{x:Type Button}">
             <Setter Property="FontFamily" Value="Times New Roman" />
@@ -76,21 +76,36 @@
     <Grid Background="#FF3C324E">
         <DockPanel HorizontalAlignment="Left" Height="400.4" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Width="502.574">
             <Grid Height="55.162" VerticalAlignment="Top" Width="502.381">
-                <Button Style="{StaticResource ResourceKey=NavigationButton}" Content="设置" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="82.143" Height="35.162" BorderThickness="0" Click="Setting_Click"/>
-                <Button Style="{StaticResource ResourceKey=NavigationButton}" Content="云端" HorizontalAlignment="Left" Margin="92.143,10,0,0" VerticalAlignment="Top" Width="82.143" Height="35.162" BorderThickness="0" Click="Cloud_Click"/>
+                <Button Style="{StaticResource ResourceKey=NavigationButton}" Content="设置" HorizontalAlignment="Left" Margin="10,12.581,0,0" VerticalAlignment="Top" Width="64.143" Height="30" BorderThickness="0" Click="Setting_Click"/>
                 <Menu x:Name="shot" Margin="417.1,15,27.1,15" Background="#FF7F6F8C" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Height="30">
                     <MenuItem HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Times New Roman" FontSize="16" Padding="0" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="60" >
                         <MenuItem.Header>
                             <TextBlock TextAlignment="Center" Text="截图" Width="60" Height="30" Padding="0,6,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </MenuItem.Header>
-                        <MenuItem Header="MenuItem"/>
-                        <MenuItem Header="MenuItem"/>
-                        <MenuItem Header="MenuItem"/>
+                        <MenuItem Header="全屏截图"/>
+                        <MenuItem Header="区域截图"/>
+                        <MenuItem Header="椭圆截图"/>
                     </MenuItem>
                 </Menu>
             </Grid>
             <DockPanel LastChildFill="False" Width="488.8" Margin="-500,55.162,0,10">
-                <ContentControl Content="{Binding}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Height="320" Width="480" Foreground="{x:Null}" MinWidth="480" MinHeight="320"/>
+                <!--<ContentControl Content="{Binding}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Height="320" Width="480" Foreground="{x:Null}" MinWidth="480" MinHeight="320"/>-->
+                <Grid x:Name="cloud" Width="480" Height="320" Background="#FF70627C">
+                    <TextBlock Foreground="Black" HorizontalAlignment="Left" TextWrapping="Wrap" Text="连接" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="18" FontFamily="Times New Roman"/>
+                    <Line X1="10" Y1="35" X2="210" Y2="35" Stroke="Black" StrokeThickness="1"/>
+                    <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,47.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22.44" Width="120" FontSize="16" FontFamily="Times New Roman" Text="账号"  />
+                    <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,104.68,0,0" TextWrapping="Wrap" Text="服务器地址" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
+                    <Button Content="连接" HorizontalAlignment="Left" Margin="365.8,102.16,0,0" VerticalAlignment="Top" Width="78.2" Height="23.44" FontFamily="Times New Roman" FontSize="16" RenderTransformOrigin="0.488,2.09" Click="Connect_Click"/>
+                    <TextBlock Foreground="Black" HorizontalAlignment="Left" TextWrapping="Wrap" Text="备份" VerticalAlignment="Top" Margin="10,137.28,0,0" FontSize="18" FontFamily="Times New Roman"/>
+                    <Line X1="10" Y1="35" X2="210" Y2="35" Stroke="Black" StrokeThickness="1" Margin="0,127.28,0,-127.28"/>
+                    <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,176.573,0,0" TextWrapping="Wrap" Text="自动备份" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
+                    <CheckBox Content="是" HorizontalAlignment="Left" Margin="130,176.573,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.021,-1.378" Height="18.4" Width="81.595" FontSize="14" FontFamily="Times New Roman"/>
+                    <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,76.24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22.44" Width="120" FontSize="16" FontFamily="Times New Roman" Text="密码" />
+                    <TextBox HorizontalAlignment="Left" Height="22.44" Margin="130,46.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16" Text="{Binding Path=textShow.Account,Mode=TwoWay}"/>
+                    <TextBox HorizontalAlignment="Left" Height="22.44" Margin="130,103.68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16" Text="{Binding Path=textShow.Address,Mode=TwoWay}"/>
+                    <TextBox HorizontalAlignment="Left" Height="22.44" Margin="130,75.24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16" Text="{Binding Path=textShow.Password,Mode=TwoWay}"/>
+
+                </Grid>
             </DockPanel>
         </DockPanel>
         <ScrollViewer HorizontalAlignment="Left" Height="400" Margin="517.574,10,0,0" VerticalAlignment="Top" Width="270" Background="#FF2E1F3C" PanningMode="Both">
