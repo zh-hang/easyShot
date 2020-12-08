@@ -13,27 +13,34 @@ namespace easyShot
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
+    /// 
+
+    public class Photo
+    {
+        public string FullPath { get; set; }
+    }
+
+
     public partial class MainWindow : Window
     {
         SettingViewModel setting;
         CloudViewModel cloud;
-        public PhotoCollection photos;
+        public List<Photo> photos = new List<Photo>();
         public string photos_path;
         public MainWindow()
         {
-            photos_path = "E:\\photo\\somePhotoes";
-            photos = new PhotoCollection(new DirectoryInfo(photos_path));
-            Binding binding = new Binding();
-            binding.Source = photos;
-            binding.Path = new PropertyPath("Directory");
-            binding.Mode = BindingMode.TwoWay;
-            InitializeComponent();
+            photos_path = "\\images";
+            getAllImagePath(photos_path);
             setting = new SettingViewModel();
             cloud = new CloudViewModel();
+            InitializeComponent();
             DataContext = setting;
-            //BindingOperations.SetBinding(this.test, TextBlock.TextProperty, binding);
-            //BindingOperations.SetBinding(this.lstImg, ListBox.ItemsSourceProperty, binding);
-            this.lstImg.ItemsSource = photos;
+            try
+            {
+                this.lstImg.ItemsSource = photos;
+            }
+            catch (Exception e){ MessageBox.Show(e.Message); };
+
         }
 
         private void Setting_Click(object sender, RoutedEventArgs e)
@@ -45,83 +52,31 @@ namespace easyShot
         {
             DataContext = cloud;
         }
-    }
 
-    public class Photo
-    {
-        private readonly Uri source;
-
-        public string path;
-        public BitmapFrame image;
-
-        public Photo(string path)
+        public void getAllImagePath(string path)
         {
-            this.path = path;
-            this.source = new Uri(path);
-            this.image = BitmapFrame.Create(source);
-        }
-
-        public override string ToString()
-        {
-            return source.ToString();
-        }
-    }
-
-    public class PhotoCollection : ObservableCollection<Photo>
-    {
-        private DirectoryInfo directory;
-        public string Path
-        {
-            set
+            DirectoryInfo di = new DirectoryInfo(path);
+            FileInfo[] files = di.GetFiles("*.*", SearchOption.AllDirectories);
+            if (files != null && files.Length > 0)
             {
-                directory = new DirectoryInfo(value);
-            }
-            get { return directory.FullName; }
-        }
-
-        public DirectoryInfo Directory
-        {
-            set
-            {
-                directory = value;
-                Update();
-            }
-            get
-            {
-                return directory;
-            }
-        }
-
-        public PhotoCollection()
-        {
-
-        }
-        public PhotoCollection(string Path)
-        {
-            this.directory = new DirectoryInfo(Path);
-        }
-
-        public PhotoCollection(DirectoryInfo directory)
-        {
-            this.directory = directory;
-            Update();
-        }
-
-        private void Update()
-        {
-            Clear();
-            try
-            {
-                foreach (var f in directory.GetFiles("*.*"))
-                    if (f.Extension == ".jpg" || f.Extension == ".png")
+                foreach (var file in files)
+                {
+                    if (file.Extension == (".jpg") ||
+                        file.Extension == (".png") ||
+                        file.Extension == (".bmp") ||
+                        file.Extension == (".gif"))
                     {
-                        Add(new Photo(f.FullName));
+                        photos.Add(new Photo()
+                        {
+                            FullPath = file.FullName
+                        });
                     }
-            }
-            catch(DirectoryNotFoundException)
-            {
-                MessageBox.Show("No Such Directory");
+                }
             }
         }
+
     }
+
+    
+    
 }

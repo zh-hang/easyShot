@@ -16,6 +16,7 @@
         <DataTemplate x:Name="cloudViewTemplate" DataType="{x:Type viewmodels:CloudViewModel}">
             <views:CloudView DataContext="{Binding}"/>
         </DataTemplate>
+
         <Style x:Key="NavigationButton" TargetType="{x:Type Button}">
             <Setter Property="FontFamily" Value="Times New Roman" />
             <Setter Property="FontSize" Value="18" />
@@ -94,10 +95,10 @@
         </DockPanel>
         <ScrollViewer HorizontalAlignment="Left" Height="400" Margin="517.574,10,0,0" VerticalAlignment="Top" Width="270" Background="#FF2E1F3C" PanningMode="Both">
             <StackPanel Width="250">
-                <ListBox Name="lstImg" Width="Auto" Height="200">
+                <ListBox Name="lstImg" Width="Auto" Height="400" Background="#FF302348" BorderBrush="{x:Null}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Image Stretch="Uniform" Source="{Binding Path=image}">
+                            <Image Stretch="Uniform" Width="218" Source="{Binding Path=FullPath}">
                             </Image>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
