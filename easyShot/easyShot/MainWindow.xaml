@@ -85,6 +85,7 @@
                         <MenuItem Header="全屏截图" Click="FullShot_Click"/>
                         <MenuItem Header="区域截图" Click="FieldShot_Click"/>
                         <MenuItem Header="椭圆截图" Click="Circle_Click"/>
+                        <MenuItem Header="窗口截图" Click="Window_Click"/>
                     </MenuItem>
                 </Menu>
             </Grid>
@@ -104,7 +105,6 @@
                     <TextBox HorizontalAlignment="Left" Height="22.44" Margin="130,46.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16" Text="{Binding Path=textShow.Account,Mode=TwoWay}"/>
                     <TextBox HorizontalAlignment="Left" Height="22.44" Margin="130,103.68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16" Text="{Binding Path=textShow.Address,Mode=TwoWay}"/>
                     <TextBox HorizontalAlignment="Left" Height="22.44" Margin="130,75.24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16" Text="{Binding Path=textShow.Password,Mode=TwoWay}"/>
-
                 </Grid>
             </DockPanel>
         </DockPanel>

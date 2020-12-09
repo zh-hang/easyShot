@@ -103,7 +103,7 @@ namespace easyShot
         private int y2;//源图像的右下角y逻辑坐标
         private int width;//源图像的宽度
         private int height;//源图像的长度
-        private Image image;//图片
+        private Image image;
         private string name;//图片名字
        
 
@@ -115,16 +115,19 @@ namespace easyShot
         public void setName(string name) { this.name = name; }
         public string getName() { return this.name; }
 
-        //获取图片
-        public void setPicture(Image img) { this.image = img; }
-
-        public Image getPicture() { return this.image; }
-
         //默认构造函数
         public CaptureWindow() { }
-       
-       
-        //通过句柄来获取图片
+        public CaptureWindow(int x1, int y1, int x2 , int y2)//获取在两次鼠标移动时的图片大小
+        {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+            this.width = System.Math.Abs(x1-x2);
+            this.height =System.Math.Abs(y1-y2);
+        }
+        /// 
+
         public Image GetPic_ByHwnd(IntPtr hWnd)
         {
             // 根据句柄获取设备上下文句柄
@@ -164,25 +167,15 @@ namespace easyShot
             return img;
         }
 
-        //通过鼠标前后两个位置来获取图片
-        public Image GetPic_ByMouse(int x1,int x2,int y1,int y2)
+        public Image GetPic_ByMouse()
         {
-
             Image img;
-            //参数获取
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-            this.width = System.Math.Abs(x1 - x2);
-            this.height = System.Math.Abs(y1 - y2);
             IntPtr hWnd=User32.GetDesktopWindow();
 
             // 根据句柄获取设备上下文句柄
             IntPtr hdcSrc = User32.GetWindowDC(hWnd);
             // 创建与指定设备兼容的存储器设备上下文(DC)
             IntPtr hdcDest = Gdi32.CreateCompatibleDC(hdcSrc);
-
             
 
             // 使用bitmap对象来存设备上下文数据
@@ -228,7 +221,7 @@ namespace easyShot
         {
             Image img;
             IntPtr hWnd = User32.GetDesktopWindow();
-            img = GetPic_ByMouse(x1,y1,x2,y2);//通过鼠标
+            img = GetPic_ByMouse();//通过鼠标
             return img;
 
         }//根据鼠标移动生成的矩形获取对应的图片
@@ -355,7 +348,6 @@ namespace easyShot
             public static extern int GetClassName(int hWnd, StringBuilder lpString, int nMaxCont);
         }
 
-
         public class Gdi32//用来绘制图片
         {
             public const int SRCCOPY = 0x00CC0020; // BitBlt dwRop parameter
@@ -376,18 +368,34 @@ namespace easyShot
             public static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
         }
 
-        
-
-
-
     }
 
-    class PictureModify: CaptureWindow
+    class PictureModify
     {
-  
+        private Image image;//图片
         private Bitmap bitmap;//位图
-   
-   
+        private int height;//图片高度
+        private int width;//图片宽度
+
+        //获取图片长宽
+        public void setWidth(int width) { this.width = width; }
+        public int getWidth() { return this.width; }
+
+        public void setHeight(int height) { this.height = height; }
+        public int getHeight() { return this.height; }
+
+        //获取图片
+        public void setPicture(Image img) { this.image = img; }
+
+        public Image getPicture() { return this.image; }
+
+        //public Image Bitmap_to_Image()
+        //{
+        //    Image img;
+        //    //Bitmap转Image
+        //    return this.image = img;
+        //}
+
         //public Bitmap Image_to_Bitmap()
         //{
         //    Bitmap bit;
@@ -397,9 +405,7 @@ namespace easyShot
         //展示图片
         public void ShowPicture()
         {
-            Point point = new Point(200, 200);
-           // Graphics.DrawImage(image, point);
-            //image.Dispose();//释放资源
+
         }
         //裁剪图片
         public Image CutPictrue()
