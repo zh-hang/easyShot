@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace easyShot
 {
@@ -27,6 +29,25 @@ namespace easyShot
         private Point rectPoint;
         private string path;
         private bool ifShot;
+        private System.Drawing.Image img;
+        private int i = 0;
+        private IntPtr hWnd;
+        private string kind;
+
+        private void MainWindow_Double_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            i += 1;
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            timer.Tick += (s, e1) => { timer.IsEnabled = false; i = 0; };
+            timer.IsEnabled = true;
+            if (i % 2 == 0)
+            {
+                timer.IsEnabled = false;
+                i = 0;
+                savePhoto();
+            }
+        }
 
         private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -57,16 +78,67 @@ namespace easyShot
             }
         }
 
-        public Shot(System.Drawing.Image image, string imgPath)
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
         {
+            public int left;
+            public int top;
+            public int right;
+            public int bottom;
+        }
+
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern bool SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
+        [DllImport("user32.dll", EntryPoint = "WindowFromPoint")]
+        public static extern IntPtr WindowFromPoint(int xPoint, int yPoint);
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
+
+        private void MainWindow_MouseDown_Hide(object sender, MouseButtonEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+            Thread.Sleep(50);
+            _downPoint = System.Windows.Forms.Control.MousePosition;
+            hWnd = WindowFromPoint(_downPoint.X, _downPoint.Y);
+            SwitchToThisWindow(hWnd, true);
+            Thread.Sleep(50);
+            CaptureWindow captureWindow = new CaptureWindow();
+            img = captureWindow.GetPic_Desktop();
+            setBackground();
+            WindowState = WindowState.Maximized;
+            ifShot = true;
+        }
+
+
+        public Shot(System.Drawing.Image image, string imgPath, string kind)
+        {
+            img = image;
             ifShot = false;
             path = imgPath;
-            var bitmap = new System.Drawing.Bitmap(image);
+            this.kind = kind;
+            setBackground();
+            InitializeComponent();
+            if (kind == "field")
+            {
+                fieldShot();
+            }
+            else if (kind == "window")
+            {
+                windowShot();
+            }
+            else
+            {
+                Close();
+            }
+        }
+
+        private void setBackground()
+        {
+            var bitmap = new System.Drawing.Bitmap(img);
             var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             bitmap.Dispose();
             Background = new ImageBrush(bitmapSource);
-            InitializeComponent();
-            fieldShot();
         }
 
         private void fieldShot()
@@ -74,6 +146,14 @@ namespace easyShot
             MouseDown += MainWindow_MouseDown;
             MouseMove += MainWindow_MouseMove;
             MouseUp += MainWindow_MouseUp;
+            MouseDown += MainWindow_Double_MouseDown;
+        }
+
+
+        private void windowShot()
+        {
+            MouseDown += MainWindow_MouseDown_Hide;
+            MouseDown += MainWindow_Double_MouseDown;
         }
 
         private void Grid_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -84,6 +164,29 @@ namespace easyShot
             }
         }
 
+        private void savePhoto()
+        {
+            img.Save(path);
+            if (ifShot)
+            {
+                CaptureWindow captureWindow = new CaptureWindow();
+                if (kind == "field")
+                {
+                    WindowState = WindowState.Minimized;
+                    Thread.Sleep(50);
+                    captureWindow.GetPic_Retangle(_downPoint, _upPoint).Save(path);
+
+                }
+                else if (kind == "window")
+                    captureWindow.GetPic_ByHwnd(hWnd);
+            }
+            else
+            {
+                img.Save(path);
+            }
+            Close();
+        }
+
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -91,47 +194,7 @@ namespace easyShot
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            if (ifShot)
-            {
-                CaptureWindow captureWindow = new CaptureWindow();
-                captureWindow.GetPic_Retangle(_downPoint, _upPoint);
-            }
-            Close();
+            savePhoto();
         }
-
-
-        //    private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        //    {
-        //        IsLeftMouseDown = true;
-        //        if (th != null)
-        //        {
-        //            if (th.ThreadState == ThreadState.Running || th.ThreadState == ThreadState.WaitSleepJoin)
-        //                th.Abort();
-        //        }
-        //        th = new Thread(new ThreadStart(() =>
-        //        {
-
-        //            if (IsLeftMouseDown)
-        //            {
-        //                EntryTouch = true;
-        //                IsLeftMouseDown = false;
-        //                _downPoint = e.GetPosition(shotScreen);
-        //            }
-
-        //            EntryTouch = false;
-        //        }));
-        //        th.Start();
-        //    }
-
-        //    private void DataGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        //    {
-        //        //if (EntryTouch)
-        //        //{
-        //        //}
-        //        //_upPoint = e.GetPosition(shotScreen);
-
-        //        //IsLeftMouseDown = false;
-        //    }
-
     }
 }

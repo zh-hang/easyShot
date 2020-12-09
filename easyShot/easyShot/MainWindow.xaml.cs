@@ -124,11 +124,6 @@ namespace easyShot
             photosInit();
         }
 
-        //private void Cloud_Click(object sender, RoutedEventArgs e)
-        //{
-        //    DataContext = cloud;
-        //}
-
 
 
         private void getAllImagePath()
@@ -249,21 +244,27 @@ namespace easyShot
             updatePhotoes();
         }
 
+        private void openShot(string kind)
+        {
+            CaptureWindow captureWindow = new CaptureWindow();
+            Shot shot = new Shot(captureWindow.GetPic_Desktop(), photos_path + "/121.jpg", kind);
+            shot.Topmost = true;
+            shot.WindowStyle = System.Windows.WindowStyle.None;
+            shot.WindowState = System.Windows.WindowState.Maximized;
+            shot.ShowDialog();
+            updatePhotoes();
+        }
+
         private void FullShot_Click(object sender, RoutedEventArgs e)
         {
-            //CaptureWindow captureWindow = new CaptureWindow();
-
+            CaptureWindow captureWindow = new CaptureWindow();
+            captureWindow.GetPic_Desktop().Save(photos_path + "/31.jpg");
+            updatePhotoes();
         }
 
         private void FieldShot_Click(object sender, RoutedEventArgs e)
         {
-            CaptureWindow captureWindow = new CaptureWindow();
-            Shot shot = new Shot(captureWindow.GetPic_Desktop(),photos_path+"/121.jpg");
-            shot.Topmost = true;
-            shot.WindowStyle= System.Windows.WindowStyle.None;
-            shot.WindowState = System.Windows.WindowState.Maximized;
-            shot.ShowDialog();
-            updatePhotoes();
+            openShot("field");
         }
 
         private void Circle_Click(object sender, RoutedEventArgs e)
@@ -273,11 +274,7 @@ namespace easyShot
 
         private void Window_Click(object sender, RoutedEventArgs e)
         {
-            MousePos mousePos = new MousePos();
-            mousePos.MouseClickEvent += mousePos.mouseDown;
-            CaptureWindow captureWindow = new CaptureWindow();
-            captureWindow.GetPic_Window().Save(photos_path + "\\43.jpg");
-            updatePhotoes();
+            openShot("window");
         }
     }
 }
