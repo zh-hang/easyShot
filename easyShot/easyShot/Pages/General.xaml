@@ -14,7 +14,7 @@
             <Line X1="10" Y1="35" X2="210" Y2="35" Stroke="Black" StrokeThickness="1"/>
             <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,47.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22.44" Width="120" FontSize="16" FontFamily="Times New Roman" ><Run Text="默认保存"/><Run Text="路径"/></TextBlock>
             <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,75.24,0,0" TextWrapping="Wrap" Text="默认文件名" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
-            <Button Content="浏览" HorizontalAlignment="Left" Margin="365.8,46.8,0,0" VerticalAlignment="Top" Width="78.2" Height="23.44" FontFamily="Times New Roman" FontSize="16"/>
+            <Button Content="浏览" HorizontalAlignment="Left" Margin="365.8,46.8,0,0" VerticalAlignment="Top" Width="78.2" Height="23.44" FontFamily="Times New Roman" FontSize="16" Click="Browse_Click"/>
             <Button Content="保存" HorizontalAlignment="Left" Margin="10,243.6,0,0" VerticalAlignment="Top" Width="78.2" Height="23.44" FontFamily="Times New Roman" FontSize="16" Click="Save_Click"/>
             <TextBox x:Name="PathBox" HorizontalAlignment="Left" Height="22.44" Margin="130,46.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16"/>
             <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="22.44" Margin="130,74.24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16"/>
