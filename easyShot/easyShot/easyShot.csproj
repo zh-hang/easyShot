@@ -39,10 +39,17 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aliyun.OSS, Version=2.12.0.0, Culture=neutral, PublicKeyToken=0ad4175f0dac0b9b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aliyun.OSS.SDK.2.12.0\lib\net45\Aliyun.OSS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,6 +69,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Cloud.cs" />
+    <Compile Include="ConfigureManager.cs" />
     <Compile Include="ScreenShot.cs" />
     <Compile Include="ViewModels\CloudViewModel.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
@@ -112,6 +120,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -3,11 +3,7 @@
 	<startup>
 		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
 	</startup>
-	<appSettings>
-		<add key="shotfilepath" value="C:"/>
-		<add key="shotmodel" value="shotsquare"/>
-	</appSettings>
-	<shotfilepath content="abcd"/>
+	<shotfilepath content="C:\Users\liaoj\Desktop\test"/>
 	<startmode content="startautomaticallty"/>
 	<shotmode content="shotsquare"/>
 </configuration>
