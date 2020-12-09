@@ -97,12 +97,18 @@ namespace easyShot
     class CaptureWindow
     {
 
-        private int x;//源图像的x逻辑坐标（在整个屏幕中）
-        private int y;//源图像的y逻辑左部
+        private int x1;//源图像的左上角x逻辑坐标
+        private int y1;//源图像的左上界y逻辑坐标
+        private int x2;//源图像的右下角x逻辑坐标
+        private int y2;//源图像的右下角y逻辑坐标
         private int width;//源图像的宽度
         private int height;//源图像的长度
         private Image image;
-        private string name;
+        private string name;//图片名字
+       
+
+        public int getWidth() { return this.width; }
+        public int getHeight() { return this.height; }
 
         public void setImage(Image image) { this.image = image; }
         public Image getImage() { return this.image; }
@@ -111,12 +117,14 @@ namespace easyShot
 
         //默认构造函数
         public CaptureWindow() { }
-        public CaptureWindow(int x, int y, int width, int height)//获取在两次鼠标移动时的图片大小
+        public CaptureWindow(int x1, int y1, int x2 , int y2)//获取在两次鼠标移动时的图片大小
         {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+            this.width = System.Math.Abs(x1-x2);
+            this.height =System.Math.Abs(y1-y2);
         }
         /// 
 
@@ -133,12 +141,20 @@ namespace easyShot
             int width = windowRect.right - windowRect.left;
             int height = windowRect.bottom - windowRect.top;
 
+            //图片长宽和起点赋值
+            this.width = width;
+            this.height = height;
+            this.x1 = 0;
+            this.y1 = 0;
+
             // 使用bitmap对象来存设备上下文数据
             IntPtr hBitmap = Gdi32.CreateCompatibleBitmap(hdcSrc, width, height);
             // 选择bitmap对象到指定设备上下文环境中
             IntPtr hOld = Gdi32.SelectObject(hdcDest, hBitmap);
             // 获取数据流
             Gdi32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, 0, 0, Gdi32.SRCCOPY);
+          
+         
             // 恢复设备上下文环境
             Gdi32.SelectObject(hdcDest, hOld);
             // 释放句柄
@@ -151,6 +167,36 @@ namespace easyShot
             return img;
         }
 
+        public Image GetPic_ByMouse()
+        {
+            Image img;
+            IntPtr hWnd=User32.GetDesktopWindow();
+
+            // 根据句柄获取设备上下文句柄
+            IntPtr hdcSrc = User32.GetWindowDC(hWnd);
+            // 创建与指定设备兼容的存储器设备上下文(DC)
+            IntPtr hdcDest = Gdi32.CreateCompatibleDC(hdcSrc);
+            
+
+            // 使用bitmap对象来存设备上下文数据
+            IntPtr hBitmap = Gdi32.CreateCompatibleBitmap(hdcSrc, width, height);
+            // 选择bitmap对象到指定设备上下文环境中
+            IntPtr hOld = Gdi32.SelectObject(hdcDest, hBitmap);
+
+            // 获取数据流
+            Gdi32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, x1, y1, Gdi32.SRCCOPY);
+
+            // 恢复设备上下文环境
+            Gdi32.SelectObject(hdcDest, hOld);
+            // 释放句柄
+            Gdi32.DeleteDC(hdcDest);
+            User32.ReleaseDC(hWnd, hdcSrc);
+            // 将数据流转换成图
+            img = Image.FromHbitmap(hBitmap);
+            // 释放bitmap对象
+            Gdi32.DeleteObject(hBitmap);
+            return img;
+        }
         public Image GetPic_Desktop()//获取整个屏幕的图片
         {
             Image img;
@@ -158,7 +204,7 @@ namespace easyShot
             return img;
         }
 
-        public Image GetPic_Window()
+        public Image GetPic_Window()//获取某个窗口的图片
         {
             Image img;
             //一个GetWindowBymouse中的POINTAPI对象
@@ -171,37 +217,11 @@ namespace easyShot
             return img;
         }//根据鼠标位置获取对应窗口的图片
 
-        public Image GetPic_Retangle(IntPtr hWnd)
+        public Image GetPic_Retangle()//获取鼠标点击和松开后的图片
         {
             Image img;
-            // 根据句柄获取设备上下文句柄
-            IntPtr hdcSrc = User32.GetWindowDC(hWnd);
-            //创建与当前窗口DC兼容的DC
-            IntPtr hdcDest = Gdi32.CreateCompatibleDC(hdcSrc);
-
-
-            //创建具有相应尺寸的位图
-            IntPtr hBitmap = Gdi32.CreateCompatibleBitmap(hdcSrc, width, height);//根据鼠标捕捉的图片宽度
-
-            // 选择bitmap对象到指定设备上下文环境中
-            IntPtr hOld = Gdi32.SelectObject(hdcDest, hBitmap);
-
-            // 捕获图像，从指定的源句柄到目的句柄
-            Gdi32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, x, y, Gdi32.SRCCOPY);//根据鼠标捕捉的图片大小
-
-            // 恢复设备上下文环境
-            Gdi32.SelectObject(hdcDest, hOld);
-
-            // 释放目的句柄
-            Gdi32.DeleteDC(hdcDest);
-
-            User32.ReleaseDC(hWnd, hdcSrc);
-
-            // 将数据流转换成图
-            img = Image.FromHbitmap(hBitmap);
-
-            // 释放bitmap对象
-            Gdi32.DeleteObject(hBitmap);
+            IntPtr hWnd = User32.GetDesktopWindow();
+            img = GetPic_ByMouse();//通过鼠标
             return img;
 
         }//根据鼠标移动生成的矩形获取对应的图片
@@ -355,15 +375,36 @@ namespace easyShot
 
     class PictureModify
     {
-        private Image image;
+        private Image image;//图片
+        private Bitmap bitmap;//位图
+        private int height;//图片高度
+        private int width;//图片宽度
+
+        //获取图片长宽
+        public void setWidth(int width) { this.width = width; }
+        public int getWidth() { return this.width; }
+
+        public void setHeight(int height) { this.height = height; }
+        public int getHeight() { return this.height; }
 
         //获取图片
-
-
         public void setPicture(Image img) { this.image = img; }
 
         public Image getPicture() { return this.image; }
 
+        public Image Bitmap_to_Image()
+        {
+            Image img;
+            //Bitmap转Image
+            return this.image = img;
+        }
+
+        public Bitmap Image_to_Bitmap()
+        {
+            Bitmap bit;
+            //Image 转Bitmap
+            return this.bitmap = bit;
+        }
         //展示图片
         public void ShowPicture()
         {
@@ -382,7 +423,7 @@ namespace easyShot
         //    }
     }
 }
-}
+
 
 
 
