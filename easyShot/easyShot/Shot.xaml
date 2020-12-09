@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:easyShot"
         mc:Ignorable="d"
-        Title="Shot" Height="450" Width="800"
+        Title="Shot" Height="1080" Width="1920"
         KeyDown="Grid_PreviewKeyDown"
         
         >
     <!--MouseDown="Window_MouseDown"
         MouseUp="DataGrid_MouseLeftButtonUp"-->
     <Grid x:Name="shotScreen">
-        <Button Content="Button" HorizontalAlignment="Left" Margin="226.878,270.084,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click"/>
+        <Button Content="保存" HorizontalAlignment="Left" Margin="1310.078,780.76,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click" Height="30.44"/>
         <Rectangle x:Name="Rectangle" StrokeThickness="2" Stroke="Black" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
+        <Button Content="取消" HorizontalAlignment="Left" Margin="1390.078,780.76,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click" Height="30.44"/>
     </Grid>
 </Window>

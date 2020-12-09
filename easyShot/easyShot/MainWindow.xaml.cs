@@ -262,7 +262,7 @@ namespace easyShot
             shot.Topmost = true;
             shot.WindowStyle= System.Windows.WindowStyle.None;
             shot.WindowState = System.Windows.WindowState.Maximized;
-            shot.Show();
+            shot.ShowDialog();
             updatePhotoes();
         }
 

@@ -25,6 +25,7 @@ namespace easyShot
     {
         private Point _downPoint, _upPoint;
         private string path;
+        private bool ifShot;
 
         private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -46,23 +47,17 @@ namespace easyShot
             if (_started)
             {
                 _upPoint = e.GetPosition(shotScreen);
-
                 var rect = new Rect(_downPoint, _upPoint);
                 Rectangle.Margin = new Thickness(rect.Left, rect.Top, 0, 0);
                 Rectangle.Width = rect.Width;
                 Rectangle.Height = rect.Height;
+                ifShot = true;
             }
         }
 
-
-        //bool IsLeftMouseDown = false;
-        //bool EntryTouch = false;
-        //Thread th = null;
-
-
-
         public Shot(System.Drawing.Image image, string imgPath)
         {
+            ifShot = false;
             path = imgPath;
             var bitmap = new System.Drawing.Bitmap(image);
             var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
@@ -72,12 +67,6 @@ namespace easyShot
             MouseDown += MainWindow_MouseDown;
             MouseMove += MainWindow_MouseMove;
             MouseUp += MainWindow_MouseUp;
-            //MousePos mousePos = new MousePos();
-            //mousePos.MouseClickEvent += new MousePos.MouseClickHandler(mousePos.mouseDown);
-            //mousePos.MouseMoveEvent += mousePos.mouseMove;
-            //mousePos.MouseClickEvent += mousePos.mouseUp;
-            //CaptureWindow captureWindow = new CaptureWindow();
-            //captureWindow.GetPic_Retangle(mousePos.x0, mousePos.y0, mousePos.x1, mousePos.y1).Save(imgPath);
         }
 
         private void Grid_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -87,10 +76,19 @@ namespace easyShot
                 Close();
             }
         }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            CaptureWindow captureWindow = new CaptureWindow();
-            captureWindow.GetPic_Retangle(new System.Drawing.Point((int)_downPoint.X, (int)_downPoint.Y), new System.Drawing.Point((int)_upPoint.X, (int)_upPoint.Y)).Save(path);
+            if (ifShot)
+            {
+                CaptureWindow captureWindow = new CaptureWindow();
+                captureWindow.GetPic_Retangle(_downPoint,_upPoint).Save(path);
+            }
             Close();
         }
 
