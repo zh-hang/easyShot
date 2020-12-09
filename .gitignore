@@ -6,3 +6,7 @@
 /.vs/slnx.sqlite
 /easyShot/easyShot/bin/Debug
 /easyShot/EasyShotTests/obj/Debug
+/easyShot/easyShot/EasyShot.csproj.user
+/easyShot/easyShot/EasyShot_rxynfcsd_wpftmp.csproj
+/easyShot/easyShot/packages.config
+/easyShot/packages/Aliyun.OSS.SDK.NetCore.2.12.0
