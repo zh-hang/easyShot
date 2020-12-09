@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Windows.Data;
 using System.Windows.Controls;
 using System.ComponentModel;
+using System.Drawing;
 
 namespace easyShot
 {
@@ -208,7 +209,7 @@ namespace easyShot
 
         private void FullShot_Click(object sender, RoutedEventArgs e)
         {
-            //CaptureWindow captureWindow = new CaptureWindow();
+            
 
         }
 
