@@ -30,19 +30,20 @@ namespace easyShot
             }
         }
 
-        public Shot(System.Drawing.Image image)
+        public Shot(System.Drawing.Image image,string imgPath)
         {
             var bitmap = new System.Drawing.Bitmap(image);
             var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(),IntPtr.Zero,Int32Rect.Empty,BitmapSizeOptions.FromEmptyOptions());
             bitmap.Dispose();
             Background = new ImageBrush(bitmapSource);
             InitializeComponent();
+            
             MousePos mousePos = new MousePos();
-            mousePos.MouseClickEvent += mousePos.mouseDown;
-            mousePos.MouseMoveEvent += mousePos.mouseMove;
-            mousePos.MouseClickEvent += mousePos.mouseUp;
+            mousePos.MouseClickEvent += new MousePos.MouseClickHandler(mousePos.mouseDown);
+            //mousePos.MouseMoveEvent += mousePos.mouseMove;
+            //mousePos.MouseClickEvent += mousePos.mouseUp;
             CaptureWindow captureWindow = new CaptureWindow();
-
+            captureWindow.GetPic_ByMouse(mousePos.x0, mousePos.y0, mousePos.x1, mousePos.y1).Save(imgPath);
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)

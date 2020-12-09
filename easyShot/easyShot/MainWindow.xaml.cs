@@ -258,7 +258,7 @@ namespace easyShot
         private void FieldShot_Click(object sender, RoutedEventArgs e)
         {
             CaptureWindow captureWindow = new CaptureWindow();
-            Shot shot = new Shot(captureWindow.GetPic_Desktop());
+            Shot shot = new Shot(captureWindow.GetPic_Desktop(),photos_path+"/121.jpg");
             shot.Topmost = true;
             shot.WindowStyle= System.Windows.WindowStyle.None;
             shot.WindowState = System.Windows.WindowState.Maximized;
