@@ -99,8 +99,8 @@ namespace easyShot
     {
 
  
-        private System.Windows.Point Point_push;
-        private System.Windows.Point Point_out;
+        private Point Point_push;
+        private Point Point_out;
         private double width;//源图像的宽度
         private double height;//源图像的长度
         private Image image;//图片
@@ -148,9 +148,8 @@ namespace easyShot
             IntPtr hBitmap = Gdi32.CreateCompatibleBitmap(hdcSrc, width, height);
             // 选择bitmap对象到指定设备上下文环境中
             IntPtr hOld = Gdi32.SelectObject(hdcDest, hBitmap);
-            // 获取数据流
+            // 执行与指定源设备上下文的像素矩形对应的颜色数据的位块传输到目标设备上下文。
             Gdi32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, 0, 0, Gdi32.SRCCOPY);
-
 
             // 恢复设备上下文环境
             Gdi32.SelectObject(hdcDest, hOld);
@@ -182,7 +181,7 @@ namespace easyShot
             // 选择bitmap对象到指定设备上下文环境中
             IntPtr hOld = Gdi32.SelectObject(hdcDest, hBitmap);
 
-            // 获取数据流
+            // 执行与指定源设备上下文的像素矩形对应的颜色数据的位块传输到目标设备上下文
             Gdi32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, Point_push.X, Point_push.Y, Gdi32.SRCCOPY);
 
             // 恢复设备上下文环境
@@ -216,7 +215,7 @@ namespace easyShot
             return img;
         }//根据鼠标位置获取对应窗口的图片
 
-        public Image GetPic_Retangle(System.Windows.Point p1 ,System.Windows.Point p2)//获取鼠标点击和松开后的图片
+        public Image GetPic_Retangle(Point p1 ,Point p2)//获取鼠标点击和松开后的图片
         {
 
             Image img;
