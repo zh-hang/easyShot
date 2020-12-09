@@ -8,11 +8,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MessageBox = System.Windows.MessageBox;
 
 namespace easyShot.Pages
 {
@@ -94,6 +96,19 @@ namespace easyShot.Pages
             MessageBox.Show("保存成功!");
             PathBox.Text = generalData.Name;
             NameBox.Text = generalData.Path;
+        }
+
+        private void Browse_Click(object sender, RoutedEventArgs e)
+        {
+            FolderBrowserDialog m_Dialog = new FolderBrowserDialog();
+            DialogResult result = m_Dialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.Cancel)
+            {
+                return;
+            }
+            generalData.Path = m_Dialog.SelectedPath.Trim();
+            PathBox.Text = generalData.Path;
         }
     }
 }
