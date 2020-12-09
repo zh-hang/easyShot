@@ -10,6 +10,5 @@
         >
     <Grid x:Name="shotScreen">
         <Button Content="Button" HorizontalAlignment="Left" Margin="226.878,270.084,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click"/>
-        
     </Grid>
 </Window>

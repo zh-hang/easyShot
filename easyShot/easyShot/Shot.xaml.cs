@@ -40,10 +40,10 @@ namespace easyShot
             
             MousePos mousePos = new MousePos();
             mousePos.MouseClickEvent += new MousePos.MouseClickHandler(mousePos.mouseDown);
-            //mousePos.MouseMoveEvent += mousePos.mouseMove;
-            //mousePos.MouseClickEvent += mousePos.mouseUp;
+            mousePos.MouseMoveEvent += mousePos.mouseMove;
+            mousePos.MouseClickEvent += mousePos.mouseUp;
             CaptureWindow captureWindow = new CaptureWindow();
-            captureWindow.GetPic_ByMouse(mousePos.x0, mousePos.y0, mousePos.x1, mousePos.y1).Save(imgPath);
+            captureWindow.GetPic_Retangle(mousePos.x0, mousePos.y0, mousePos.x1, mousePos.y1).Save(imgPath);
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
