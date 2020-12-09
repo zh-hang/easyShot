@@ -62,7 +62,7 @@ namespace easyShot
             loadShotFilePath();
             //loadStartMode();
             //loadShotMode();
-            this.shotMode = easyShot.ShotMode.ShotSquare;
+            this.shotMode = EasyShot.ShotMode.ShotSquare;
         }
 
         public void loadconfigXmlFilePath()
@@ -97,9 +97,9 @@ namespace easyShot
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
             string temp = element.GetAttribute("content").ToString();
             if (temp == ConfigManager.startautomaticallty)
-                this.startMode = easyShot.StartMode.StartAutomaticallty;
+                this.startMode = EasyShot.StartMode.StartAutomaticallty;
             if (temp == ConfigManager.startmanually)
-                this.startMode = easyShot.StartMode.StartManually;
+                this.startMode = EasyShot.StartMode.StartManually;
         }
         public StartMode getStartMode()
         {
@@ -112,9 +112,9 @@ namespace easyShot
             if (node == null) throw new System.Exception("the Configure file is illegal!");
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
             
-            if (NewStartMode == easyShot.StartMode.StartAutomaticallty)
+            if (NewStartMode == EasyShot.StartMode.StartAutomaticallty)
                 element.SetAttribute("content", ConfigManager.startautomaticallty);
-            if (NewStartMode == easyShot.StartMode.StartManually)
+            if (NewStartMode == EasyShot.StartMode.StartManually)
                 element.SetAttribute("content", ConfigManager.startmanually);
             else
                 element.SetAttribute("content", ConfigManager.startmanually);
@@ -126,9 +126,9 @@ namespace easyShot
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
             string temp = element.GetAttribute("content").ToString();
             if (temp == ConfigManager.startautomaticallty)
-                this.startMode = easyShot.StartMode.StartAutomaticallty;
+                this.startMode = EasyShot.StartMode.StartAutomaticallty;
             if (temp == ConfigManager.startmanually)
-                this.startMode = easyShot.StartMode.StartManually;
+                this.startMode = EasyShot.StartMode.StartManually;
         }
         public ShotMode getShotMode()
         {
@@ -141,9 +141,9 @@ namespace easyShot
             if (node == null) throw new System.Exception("the Configure file is illegal!");
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
 
-            if (newShotMode == easyShot.ShotMode.ShotSquare)
+            if (newShotMode == EasyShot.ShotMode.ShotSquare)
                 element.SetAttribute("content", ConfigManager.shotsquare);
-            if (newShotMode == easyShot.ShotMode.ShotWindow)
+            if (newShotMode == EasyShot.ShotMode.ShotWindow)
                 element.SetAttribute("content", ConfigManager.shotwindow);
             else
                 element.SetAttribute("content", ConfigManager.shotsquare);

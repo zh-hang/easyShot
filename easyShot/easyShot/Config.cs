@@ -7,7 +7,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
 //simple is perfect!
-namespace easyShot
+namespace EasyShot
 {
     //用于操作App.config文件，读取和修改其中配置属性
     //enum StartMode

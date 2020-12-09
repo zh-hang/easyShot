@@ -1,4 +1,4 @@
-﻿namespace easyShot
+﻿namespace EasyShot
 {
     class ScreenShot
     {
