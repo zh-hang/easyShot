@@ -165,25 +165,17 @@ namespace easyShot
         }
 
         //通过鼠标前后两个位置来获取图片
-        public Image GetPic_ByMouse(int x1, int x2, int y1, int y2)
+        public Image GetPic_ByMouse()
         {
 
             Image img;
-            //参数获取
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-            this.width = System.Math.Abs(x1 - x2);
-            this.height = System.Math.Abs(y1 - y2);
+            //使用全屏窗口的句柄
             IntPtr hWnd = User32.GetDesktopWindow();
 
             // 根据句柄获取设备上下文句柄
             IntPtr hdcSrc = User32.GetWindowDC(hWnd);
             // 创建与指定设备兼容的存储器设备上下文(DC)
             IntPtr hdcDest = Gdi32.CreateCompatibleDC(hdcSrc);
-
-
 
             // 使用bitmap对象来存设备上下文数据
             IntPtr hBitmap = Gdi32.CreateCompatibleBitmap(hdcSrc, width, height);
@@ -224,11 +216,18 @@ namespace easyShot
             return img;
         }//根据鼠标位置获取对应窗口的图片
 
-        public Image GetPic_Retangle()//获取鼠标点击和松开后的图片
+        public Image GetPic_Retangle(int x1, int x2, int y1, int y2)//获取鼠标点击和松开后的图片
         {
+
             Image img;
-            IntPtr hWnd = User32.GetDesktopWindow();
-            img = GetPic_ByMouse(x1, y1, x2, y2);//通过鼠标
+            //参数获取
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+            this.width = System.Math.Abs(x1 - x2);
+            this.height = System.Math.Abs(y1 - y2);
+            img = GetPic_ByMouse();//通过鼠标
             return img;
 
         }//根据鼠标移动生成的矩形获取对应的图片
