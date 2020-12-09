@@ -109,6 +109,8 @@ namespace easyShot
         public void setName(string name) { this.name = name; }
         public string getName() { return this.name; }
 
+        //默认构造函数
+        public CaptureWindow() { }
         public CaptureWindow(int x, int y, int width, int height)//获取在两次鼠标移动时的图片大小
         {
             this.x = x;
@@ -346,25 +348,40 @@ namespace easyShot
             public static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
         }
 
-        //public void ShowPicture()//展示图片
-        //{
 
-        //}
 
 
     }
 
-    //class PictureModify 
-    //{
-    //   private Image image;
+    class PictureModify
+    {
+        private Image image;
 
-        //public show
-        //public Image cut()
+        //获取图片
+
+
+        public void setPicture(Image img) { this.image = img; }
+
+        public Image getPicture() { return this.image; }
+
+        //展示图片
+        public void ShowPicture()
+        {
+
+        }
+        //裁剪图片
+        public Image CutPictrue()
+        {
+            //this.image;
+            return this.image;
+
+        }
+        //public Image DrawPicture()
         //{
-            
-    //    //}
-    //}
-
+        //    this.image =
+        //    }
+    }
+}
 }
 
 
