@@ -23,15 +23,16 @@ namespace easyShot
 
     public partial class Shot : Window
     {
-        private Point _downPoint, _upPoint;
+        private System.Drawing.Point _downPoint, _upPoint;
+        private Point rectPoint;
         private string path;
         private bool ifShot;
 
         private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
             _started = true;
-
-            _downPoint = e.GetPosition(shotScreen);
+            rectPoint = e.GetPosition(shotScreen);
+            _downPoint = System.Windows.Forms.Control.MousePosition;
         }
 
         private bool _started;
@@ -46,8 +47,9 @@ namespace easyShot
         {
             if (_started)
             {
-                _upPoint = e.GetPosition(shotScreen);
-                var rect = new Rect(_downPoint, _upPoint);
+                _upPoint = System.Windows.Forms.Control.MousePosition;
+                var point = e.GetPosition(shotScreen);
+                var rect = new Rect(rectPoint, point);
                 Rectangle.Margin = new Thickness(rect.Left, rect.Top, 0, 0);
                 Rectangle.Width = rect.Width;
                 Rectangle.Height = rect.Height;
@@ -64,6 +66,11 @@ namespace easyShot
             bitmap.Dispose();
             Background = new ImageBrush(bitmapSource);
             InitializeComponent();
+            fieldShot();
+        }
+
+        private void fieldShot()
+        {
             MouseDown += MainWindow_MouseDown;
             MouseMove += MainWindow_MouseMove;
             MouseUp += MainWindow_MouseUp;
@@ -87,7 +94,7 @@ namespace easyShot
             if (ifShot)
             {
                 CaptureWindow captureWindow = new CaptureWindow();
-                captureWindow.GetPic_Retangle(_downPoint,_upPoint).Save(path);
+                captureWindow.GetPic_Retangle(_downPoint, _upPoint);
             }
             Close();
         }
