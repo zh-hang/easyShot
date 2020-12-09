@@ -16,6 +16,35 @@ namespace easyShot
     /// </summary>
     /// 
 
+    public class MousePos
+    {
+        private bool _started;
+        public int x0, y0, x1, y1;
+        public delegate void MouseClickHandler(object sender, System.Windows.Forms.MouseEventArgs e);
+        public event MouseClickHandler MouseClickEvent;
+        public delegate void MouseMoveHandler(object sender, System.Windows.Forms.MouseEventArgs e);
+        public event MouseMoveHandler MouseMoveEvent;
+
+        public void mouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            x0 = e.X;
+            y0 = e.Y;
+            _started = true;
+        }
+        public void mouseUp(object sender,System.Windows.Forms.MouseEventArgs e)
+        {
+            _started = false;
+        }
+        public void mouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (_started)
+            {
+                x1 = e.X;
+                y1 = e.Y;
+            }
+        }
+    }
+
     public class Photo : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -100,11 +129,15 @@ namespace easyShot
         //    DataContext = cloud;
         //}
 
-        
+
 
         private void getAllImagePath()
         {
             DirectoryInfo di = new DirectoryInfo(photos_path);
+            if (!di.Exists)
+            {
+                Directory.CreateDirectory(photos_path);
+            }
             FileInfo[] files = di.GetFiles("*.*", SearchOption.AllDirectories);
             if (files != null && files.Length > 0)
             {
@@ -144,6 +177,10 @@ namespace easyShot
         {
             setPhotoPath();
             DirectoryInfo di = new DirectoryInfo(photos_path);
+            if (!di.Exists)
+            {
+                Directory.CreateDirectory(photos_path);
+            }
             FileInfo[] files = di.GetFiles("*.*", SearchOption.AllDirectories);
             if (files != null && files.Length > 0)
             {
@@ -191,10 +228,55 @@ namespace easyShot
             MessageBox.Show("连接成功");
         }
 
+        private void SaveImg(System.Drawing.Image image)
+        {
+            System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(image);
+            try
+            {
+                bitmap.Save(photos_path, System.Drawing.Imaging.ImageFormat.Jpeg);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+
         private void Setting_Click(object sender, RoutedEventArgs e)
         {
             setting = new Setting();
             setting.ShowDialog();
+            updatePhotoes();
+        }
+
+        private void FullShot_Click(object sender, RoutedEventArgs e)
+        {
+            //CaptureWindow captureWindow = new CaptureWindow();
+
+        }
+
+        private void FieldShot_Click(object sender, RoutedEventArgs e)
+        {
+            CaptureWindow captureWindow = new CaptureWindow();
+            Shot shot = new Shot(captureWindow.GetPic_Desktop(),photos_path+"/121.jpg");
+            shot.Topmost = true;
+            shot.WindowStyle= System.Windows.WindowStyle.None;
+            shot.WindowState = System.Windows.WindowState.Maximized;
+            shot.Show();
+            updatePhotoes();
+        }
+
+        private void Circle_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Window_Click(object sender, RoutedEventArgs e)
+        {
+            MousePos mousePos = new MousePos();
+            mousePos.MouseClickEvent += mousePos.mouseDown;
+            CaptureWindow captureWindow = new CaptureWindow();
+            captureWindow.GetPic_Window().Save(photos_path + "\\43.jpg");
             updatePhotoes();
         }
     }
