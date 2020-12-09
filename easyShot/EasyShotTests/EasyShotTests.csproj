@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aliyun.OSS.Core, Version=2.12.0.0, Culture=neutral, PublicKeyToken=0ad4175f0dac0b9b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aliyun.OSS.SDK.NetCore.2.12.0\lib\netstandard2.0\Aliyun.OSS.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.2.1.1\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
@@ -61,12 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\easyShot\EasyShot.csproj">
-      <Project>{47E6701C-993D-4836-81DC-A67A5FF84FCA}</Project>
-      <Name>EasyShot</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

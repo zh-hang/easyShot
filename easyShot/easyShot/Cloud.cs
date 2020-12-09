@@ -15,7 +15,7 @@ namespace easyShot
 
     public class Cloud
     {
-        private easyShot.ConfigManager config;
+        private EasyShot.ConfigManager config;
         private string endpoint;
         private string accessKeyId;
         private string accessKeySecret;
@@ -26,7 +26,7 @@ namespace easyShot
         private List<System.String> localFileList;
         public Cloud()
         {
-            config = new easyShot.ConfigManager();
+            config = new EasyShot.ConfigManager();
             cloudFileList = new List<string>();
             loadConfig();
             setUpConnect();
