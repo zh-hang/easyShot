@@ -21,25 +21,15 @@ namespace easyShot
 
     public partial class Setting : Window
     {
-
-        private string path;
-
         public Setting()
         {
             InitializeComponent();
             this.frmMain.Navigate(new Uri("./Pages/General.xaml", UriKind.Relative));
         }
-
-        public void setPath(string path)
-        {
-            this.path = path;
-        }
-
         private void BtnNav_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             this.frmMain.Navigate(new Uri("./Pages/" + btn.Tag.ToString() + ".xaml", UriKind.Relative));
         }
-
     }
 }

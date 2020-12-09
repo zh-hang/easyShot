@@ -46,7 +46,7 @@ namespace easyShot
                 account = value;
                 if (PropertyChanged != null)
                 {
-                    PropertyChanged(this, new PropertyChangedEventArgs("Account"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("Path"));
                 }
             }
         }

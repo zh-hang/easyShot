@@ -20,9 +20,16 @@ namespace easyShot.Pages
     /// </summary>
     public partial class Launch : Page
     {
+
         public Launch()
         {
             InitializeComponent();
+            
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
