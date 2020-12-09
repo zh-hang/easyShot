@@ -7,8 +7,12 @@
         mc:Ignorable="d"
         Title="Shot" Height="450" Width="800"
         KeyDown="Grid_PreviewKeyDown"
+        
         >
+    <!--MouseDown="Window_MouseDown"
+        MouseUp="DataGrid_MouseLeftButtonUp"-->
     <Grid x:Name="shotScreen">
         <Button Content="Button" HorizontalAlignment="Left" Margin="226.878,270.084,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click"/>
+        <Rectangle x:Name="Rectangle" StrokeThickness="2" Stroke="Black" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
     </Grid>
 </Window>
