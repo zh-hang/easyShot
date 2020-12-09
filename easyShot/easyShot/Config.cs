@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
+
 //simple is perfect!
 namespace easyShot
 {
@@ -98,16 +99,16 @@ namespace easyShot
     {
 
  
-        private Point Point_push;
-        private Point Point_out;
-        private int width;//源图像的宽度
-        private int height;//源图像的长度
+        private System.Windows.Point Point_push;
+        private System.Windows.Point Point_out;
+        private double width;//源图像的宽度
+        private double height;//源图像的长度
         private Image image;//图片
         private string name;//图片名字
 
 
-        public int getWidth() { return this.width; }
-        public int getHeight() { return this.height; }
+        public double getWidth() { return this.width; }
+        public double getHeight() { return this.height; }
 
         public void setImage(Image image) { this.image = image; }
         public Image getImage() { return this.image; }
@@ -182,7 +183,7 @@ namespace easyShot
             IntPtr hOld = Gdi32.SelectObject(hdcDest, hBitmap);
 
             // 获取数据流
-            Gdi32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, this.Point_push.X, this.Point_push.Y, Gdi32.SRCCOPY);
+            Gdi32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, Point_push.X, Point_push.Y, Gdi32.SRCCOPY);
 
             // 恢复设备上下文环境
             Gdi32.SelectObject(hdcDest, hOld);
@@ -215,7 +216,7 @@ namespace easyShot
             return img;
         }//根据鼠标位置获取对应窗口的图片
 
-        public Image GetPic_Retangle(Point p1 ,Point p2)//获取鼠标点击和松开后的图片
+        public Image GetPic_Retangle(System.Windows.Point p1 ,System.Windows.Point p2)//获取鼠标点击和松开后的图片
         {
 
             Image img;
@@ -370,6 +371,21 @@ namespace easyShot
             public static extern bool DeleteObject(IntPtr hObject);
             [DllImport("gdi32.dll")]
             public static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
+
+            internal static void BitBlt(IntPtr hdcDest, int v1, int v2, int width, int height, IntPtr hdcSrc, double x, double y, int sRCCOPY)
+            {
+                throw new NotImplementedException();
+            }
+
+            internal static void BitBlt(IntPtr hdcDest, int v1, int v2, double width, double height, IntPtr hdcSrc, double x, double y, int sRCCOPY)
+            {
+                throw new NotImplementedException();
+            }
+
+            internal static IntPtr CreateCompatibleBitmap(IntPtr hdcSrc, double width, double height)
+            {
+                throw new NotImplementedException();
+            }
         }
 
 
