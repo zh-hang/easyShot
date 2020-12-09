@@ -117,6 +117,7 @@ namespace easyShot
             this.height = height;
         }
         /// 
+
         public Image GetPic_ByHwnd(IntPtr hWnd)
         {
             // 根据句柄获取设备上下文句柄
@@ -345,23 +346,24 @@ namespace easyShot
             public static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
         }
 
-        public void ShowPicture()//展示图片
-        {
+        //public void ShowPicture()//展示图片
+        //{
 
-        }
+        //}
 
 
     }
 
-    class PictureModify 
-    {
-       private Image image;
+    //class PictureModify 
+    //{
+    //   private Image image;
 
+        //public show
         //public Image cut()
         //{
             
-        //}
-    }
+    //    //}
+    //}
 
 }
 
