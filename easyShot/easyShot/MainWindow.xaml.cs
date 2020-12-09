@@ -17,7 +17,9 @@ namespace easyShot
 
         private void Setting_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new SettingViewModel();
+            
+         
+
         }
 
         private void Cloud_Click(object sender, RoutedEventArgs e)
