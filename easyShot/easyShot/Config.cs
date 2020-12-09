@@ -353,15 +353,16 @@ namespace EasyShot
 
     }
 
-    class PictureModify 
-    {
-       private Image image;
+    //class PictureModify 
+    //{
+    //   private Image image;
 
+        //public show
         //public Image cut()
         //{
             
-        //}
-    }
+    //    //}
+    //}
 
 }
 
