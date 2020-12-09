@@ -86,7 +86,7 @@ namespace easyShot
 
         public MainWindow()
         {
-            photos_path = "E:\\images";
+            photos_path = "\\images";
             InitializeComponent();
             textShow = new TextShow();
             textShow.Account = "123456";
@@ -148,6 +148,10 @@ namespace easyShot
         {
             setPhotoPath();
             DirectoryInfo di = new DirectoryInfo(photos_path);
+            if (!di.Exists)
+            {
+                Directory.CreateDirectory(photos_path);
+            }
             FileInfo[] files = di.GetFiles("*.*", SearchOption.AllDirectories);
             if (files != null && files.Length > 0)
             {
