@@ -32,7 +32,7 @@ A windows screenshot app with C#
 
 - 全屏截图
 - 区域截图
-- 圆形截图
+- 窗口截图
 
 ### picture
 
