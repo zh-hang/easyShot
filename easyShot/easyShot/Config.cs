@@ -97,10 +97,9 @@ namespace easyShot
     class CaptureWindow
     {
 
-        private int x1;//源图像的左上角x逻辑坐标
-        private int y1;//源图像的左上界y逻辑坐标
-        private int x2;//源图像的右下角x逻辑坐标
-        private int y2;//源图像的右下角y逻辑坐标
+ 
+        private Point Point_push;
+        private Point Point_out;
         private int width;//源图像的宽度
         private int height;//源图像的长度
         private Image image;//图片
@@ -141,8 +140,8 @@ namespace easyShot
             //图片长宽和起点赋值
             this.width = width;
             this.height = height;
-            this.x1 = 0;
-            this.y1 = 0;
+            this.Point_push.X=0;
+            this.Point_push.Y = 0;
 
             // 使用bitmap对象来存设备上下文数据
             IntPtr hBitmap = Gdi32.CreateCompatibleBitmap(hdcSrc, width, height);
@@ -183,7 +182,7 @@ namespace easyShot
             IntPtr hOld = Gdi32.SelectObject(hdcDest, hBitmap);
 
             // 获取数据流
-            Gdi32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, x1, y1, Gdi32.SRCCOPY);
+            Gdi32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, this.Point_push.X, this.Point_push.Y, Gdi32.SRCCOPY);
 
             // 恢复设备上下文环境
             Gdi32.SelectObject(hdcDest, hOld);
@@ -216,17 +215,15 @@ namespace easyShot
             return img;
         }//根据鼠标位置获取对应窗口的图片
 
-        public Image GetPic_Retangle(int x1, int x2, int y1, int y2)//获取鼠标点击和松开后的图片
+        public Image GetPic_Retangle(Point p1 ,Point p2)//获取鼠标点击和松开后的图片
         {
 
             Image img;
             //参数获取
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-            this.width = System.Math.Abs(x1 - x2);
-            this.height = System.Math.Abs(y1 - y2);
+            this.Point_push = p1;
+            this.Point_out = p2;
+            this.width = System.Math.Abs(Point_push.X -Point_push.X);
+            this.height = System.Math.Abs(Point_out.Y-Point_out.Y);
             img = GetPic_ByMouse();//通过鼠标
             return img;
 
