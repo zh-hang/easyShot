@@ -7,7 +7,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
 //simple is perfect!
-namespace EasyShot
+namespace easyShot
 {
     //用于操作App.config文件，读取和修改其中配置属性
     enum StartMode
@@ -60,9 +60,9 @@ namespace EasyShot
         {
             string temp = config.AppSettings.Settings[startmodelabel].Value;
             if (temp == ConfigManager.startautomaticallty)
-                this.startMode = EasyShot.StartMode.StartAutomaticallty;
+                this.startMode = easyShot.StartMode.StartAutomaticallty;
             if (temp == ConfigManager.startmanually)
-                this.startMode = EasyShot.StartMode.StartManually;
+                this.startMode = easyShot.StartMode.StartManually;
         }
         public StartMode getStartMode()
         {
@@ -71,14 +71,14 @@ namespace EasyShot
         public void setStartMode(StartMode NewStartMode)
         {
             this.startMode = NewStartMode;
-            if (NewStartMode == EasyShot.StartMode.StartAutomaticallty)
+            if (NewStartMode == easyShot.StartMode.StartAutomaticallty)
                 this.config.AppSettings.Settings[startmodelabel].Value = ConfigManager.startautomaticallty;
-            if (NewStartMode == EasyShot.StartMode.StartManually)
+            if (NewStartMode == easyShot.StartMode.StartManually)
                 this.config.AppSettings.Settings[startmodelabel].Value = ConfigManager.startmanually;
         }
         public void loadShotMode()
         {
-            this.shotMode = EasyShot.ShotMode.ShotSquare;
+            this.shotMode = easyShot.ShotMode.ShotSquare;
         }
         public ShotMode getShotMode()
         {
@@ -87,9 +87,9 @@ namespace EasyShot
         public void setShotMode(ShotMode newShotMode)
         {
             this.shotMode = newShotMode;
-            if (newShotMode == EasyShot.ShotMode.ShotSquare)
+            if (newShotMode == easyShot.ShotMode.ShotSquare)
                 this.config.AppSettings.Settings[shotmodelabel].Value = ConfigManager.shotsquare;
-            if (newShotMode == EasyShot.ShotMode.ShotWindow)
+            if (newShotMode == easyShot.ShotMode.ShotWindow)
                 this.config.AppSettings.Settings[shotmodelabel].Value = ConfigManager.shotwindow;
         }
     }

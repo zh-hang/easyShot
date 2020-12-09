@@ -82,9 +82,9 @@
                         <MenuItem.Header>
                             <TextBlock TextAlignment="Center" Text="截图" Width="60" Height="30" Padding="0,6,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </MenuItem.Header>
-                        <MenuItem Header="全屏截图"/>
-                        <MenuItem Header="区域截图"/>
-                        <MenuItem Header="椭圆截图"/>
+                        <MenuItem Header="全屏截图" Click="FullShot_Click"/>
+                        <MenuItem Header="区域截图" Click="FieldShot_Click"/>
+                        <MenuItem Header="椭圆截图" Click="Circle_Click"/>
                     </MenuItem>
                 </Menu>
             </Grid>

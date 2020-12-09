@@ -197,5 +197,21 @@ namespace easyShot
             setting.ShowDialog();
             updatePhotoes();
         }
+
+        private void FullShot_Click(object sender, RoutedEventArgs e)
+        {
+            //CaptureWindow captureWindow = new CaptureWindow();
+
+        }
+
+        private void FieldShot_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Circle_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
