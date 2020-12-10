@@ -25,39 +25,55 @@ namespace easyShot.Pages
     public partial class Launch : Page
     {
 
-        private class startCheck
+        private class StartCheck
         {
-            private StartMode start;
-            public StartMode Start { set { start = value; } get { return start; } }
+            public StartMode Start { set; get; }
 
 
-            public startCheck(ConfigManager config)
+            public StartCheck(ConfigManager config)
             {
-                start = config.getStartMode();
+                Start = config.getStartMode();
             }
 
             public bool ifStart()
             {
-                if (start == StartMode.StartManually)
+                if (Start == StartMode.StartManually)
                     return false;
                 return true;
             }
+
+            public void setStartMode(bool ifStart)
+            {
+                if (ifStart)
+                {
+                    Start = StartMode.StartAutomaticallty;
+                    return;
+                }
+                Start = StartMode.StartManually;
+            }
         }
+
+
         private ConfigManager configManager;
+        private StartCheck startCheck;
+
 
         public Launch()
         {
             InitializeComponent();
             configManager = new ConfigManager();
-            startCheck startCheck = new startCheck(configManager);
+            startCheck = new StartCheck(configManager);
             startModeSet.IsChecked = startCheck.ifStart();
         }
 
         
-
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-
+            startCheck.setStartMode((bool)startModeSet.IsChecked);
+            System.Console.WriteLine(startCheck.Start.ToString());
+            configManager.setStartMode(startCheck.Start);
+            ConfigManager test = new ConfigManager();
+            System.Console.WriteLine(test.getStartMode().ToString());
         }
     }
 }

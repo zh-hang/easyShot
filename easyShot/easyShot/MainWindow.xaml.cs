@@ -15,7 +15,7 @@ namespace easyShot
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
     /// 
-    
+
     // 图片类，用于展示图片
     public class Photo : INotifyPropertyChanged
     {
@@ -45,19 +45,19 @@ namespace easyShot
         private string account, password, address;
         private class Hide
         {
-            public ShotMode hide;
-            public Hide(ShotMode hide)
+            public WindowHideMode hide;
+            public Hide(WindowHideMode hide)
             {
                 this.hide = hide;
             }
             public bool ifHide()
             {
-                return hide== ShotMode.ShotSquare ? true:false;
+                return hide == WindowHideMode.Hide ? true : false;
             }
         }
         Hide hide;
 
-        public TextShow(string account,string password,string address, ShotMode hide)
+        public TextShow(string account, string password, string address, WindowHideMode hide)
         {
             this.account = account;
             this.password = password;
@@ -114,10 +114,11 @@ namespace easyShot
         private Setting setting;//设置窗口
         public BindingList<Photo> photos = new BindingList<Photo>();//图片列表
         public string photos_path;//图片文件夹路径
+        private int counter;
         public TextShow textShow;
         private ConfigManager serverData;//配置文件数据
-
-        
+        private Cloud cloudConnection;
+        private bool isConnected;
 
         public MainWindow()
         {
@@ -129,17 +130,29 @@ namespace easyShot
         //所有数据初始化
         private void dataInit()
         {
-            serverData = new ConfigManager();
-            serverData.getShotMode();
-            photos_path = "\\images";
-            //serverData.loadServerAccount();
-            //serverData.loadServerAddress();
-            //serverData.loadServerPassword();
-            //accountBox.Text = serverData.getServerAccount();
-            //passwordBox.Text = serverData.getServerPassword();
-            //addressBox.Text = serverData.getServerAddress();
+            try
+            {
+                isConnected = false;
+                serverData = new ConfigManager();
+                photos_path = serverData.getshotfilepath();
+                accountBox.Text = serverData.getServerAccount();
+                passwordBox.Password = serverData.getServerPassword();
+                addressBox.Text = serverData.getServerAddress();
+                cloudConnection = new Cloud();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("发生错误！错误原因：" + ex.Message);
+            }
         }
 
+        //打开设置界面
+        private void Setting_Click(object sender, RoutedEventArgs e)
+        {
+            setting = new Setting();
+            setting.ShowDialog();
+            updatePhotoes();
+        }
 
         /// <summary>
         /// 以下为图片相关函数
@@ -251,44 +264,58 @@ namespace easyShot
 
 
 
-        //云端连接测试
+        //云端连接
         private void Connect_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("连接成功");
+            System.Console.WriteLine(accountBox.Text);
+            serverData.setServerAccount(accountBox.Text);
+            serverData.setServerPassword(passwordBox.Password);
+            serverData.setServerAddress(addressBox.Text);
+            cloudConnection.loadConfig();
+            ConfigManager test = new ConfigManager();
+            System.Console.WriteLine(test.getServerAccount());
+            if (cloudConnection.setUpConnect())
+            {
+                isConnected = true;
+                MessageBox.Show("连接成功！");
+            }
+            else
+            {
+                MessageBox.Show("您未能成功连接服务器！");
+                isConnected = false;
+
+            }
+
         }
 
+        //同步
         private void Sync_Click(object sender, RoutedEventArgs e)
         {
-            Cloud cloud = new Cloud();
-            try
+            if (cloudConnection.setUpConnect())
             {
-                cloud.upLoadNewLocalFile();
-                cloud.downLoadNewCloudFile();
-            }catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                try
+                {
+                    cloudConnection.upLoadNewLocalFile();
+                    cloudConnection.downLoadNewCloudFile();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
+            else
+            {
+                MessageBox.Show("您未能成功连接服务器！");
+            }
+
         }
 
-        private void SaveImg(System.Drawing.Image image)
+        //连接测试
+        private bool connectTest()
         {
-            System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(image);
-            try
-            {
-                bitmap.Save(photos_path, System.Drawing.Imaging.ImageFormat.Jpeg);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-        }
-
-        //打开设置界面
-        private void Setting_Click(object sender, RoutedEventArgs e)
-        {
-            setting = new Setting();
-            setting.ShowDialog();
-            updatePhotoes();
+            if (cloudConnection.setUpConnect())
+                MessageBox.Show("连接成功");
+            return true;
         }
 
 
@@ -304,7 +331,7 @@ namespace easyShot
         private void openShot(string kind)
         {
             CaptureWindow captureWindow = new CaptureWindow();
-            Shot shot = new Shot(captureWindow.GetPic_Desktop(), photos_path + "/121.jpg", kind);
+            Shot shot = new Shot(captureWindow.GetPic_Desktop(), photos_path + counter.ToString() + ".jpg", kind);
             shot.Topmost = true;
             shot.WindowStyle = System.Windows.WindowStyle.None;
             shot.WindowState = System.Windows.WindowState.Maximized;
@@ -315,7 +342,8 @@ namespace easyShot
         private void FullShot_Click(object sender, RoutedEventArgs e)
         {
             CaptureWindow captureWindow = new CaptureWindow();
-            captureWindow.GetPic_Desktop().Save(photos_path + "/31.jpg");
+            counter += 1;
+            captureWindow.GetPic_Desktop().Save(photos_path + counter.ToString() + ".jpg");
             updatePhotoes();
         }
         //区域截图

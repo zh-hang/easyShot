@@ -5,7 +5,8 @@ using System.Numerics;
 
 namespace easyShot
 {
-    enum CloudError{
+    enum CloudError
+    {
         ErrorNo,
         ErrorTimeOut,
         ErrorInvalidLink,
@@ -29,40 +30,42 @@ namespace easyShot
             config = new easyShot.ConfigManager();
             cloudFileList = new List<string>();
             loadConfig();
-            setUpConnect();
-            updateCloudFileList();
-            updateLocalFileList();
         }
         public void loadConfig()
         {
-            this.endpoint = "oss-cn-beijing.aliyuncs.com";
-            this.accessKeyId = "LTAI4GL1UkZQoveLGWA49gmo";
-            this.accessKeySecret = "NWByphOyb5oj9U8q49ZDpe3H6PsU6K";
+            this.endpoint = config.getServerAddress();
+            this.accessKeyId = config.getServerAccount();
+            this.accessKeySecret = config.getServerPassword();
             this.bucketName = "easyshot";
         }
         //从config获取云端设置
-        public void setUpConnect()
+        public bool setUpConnect()
         {
             // 创建OSSClient实例。
             this.client = new OssClient(endpoint, accessKeyId, accessKeySecret);
             try
             {
+                updateCloudFileList();
                 if (!this.client.DoesBucketExist(this.bucketName))
                 {
                     // 创建存储空间。
                     this.bucket = client.CreateBucket(bucketName);
                     System.Console.WriteLine("Create bucket succeeded, {0} ", bucket.Name);
+
                 }
-            }catch (System.Exception ex)
+                return true;
+            }
+            catch (System.Exception ex)
             {
-                throw ex;
+                return false;
+                System.Console.WriteLine(ex.Message);
             }
         }
         public void upLoad(System.String localFileName)
         {
             //这里需要网络异常处理机制
             System.String objectName = localFileName;
-            localFileName = config.getshotfilepath()+@"\"+localFileName;
+            localFileName = config.getshotfilepath() + @"\" + localFileName;
             try
             {
                 // 上传文件
@@ -80,7 +83,7 @@ namespace easyShot
             try
             {
                 // 下载文件到流。OssObject 包含了文件的各种信息，如文件所在的存储空间、文件名、元信息以及一个输入流。
-                System.String downloadFilename = this.config.getshotfilepath()+@"\"+filename;
+                System.String downloadFilename = this.config.getshotfilepath() + @"\" + filename;
                 OssObject obj = client.GetObject(bucketName, filename);
                 using (System.IO.Stream requestStream = obj.Content)
                 {
@@ -144,9 +147,9 @@ namespace easyShot
         }
         public void upLoadNewLocalFile()
         {
-            foreach(var filename in localFileList)
+            foreach (var filename in localFileList)
             {
-                if (cloudFileList.Find((System.String thisfilename)=> thisfilename.Equals(filename)) == null)
+                if (cloudFileList.Find((System.String thisfilename) => thisfilename.Equals(filename)) == null)
                 {
                     upLoad(filename);
                 }
@@ -165,7 +168,7 @@ namespace easyShot
         public void deleteCloudFile()
         {
             foreach (var filename in cloudFileList)
-            {   
+            {
                 if (localFileList.Find((System.String thisfilename) => thisfilename.Equals(filename)) == null)
                 {
                     delete(filename);

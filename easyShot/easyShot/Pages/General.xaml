@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:easyShot.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
       Title="General">
 
     <Grid>
@@ -13,13 +13,11 @@
             <TextBlock Foreground="Black" HorizontalAlignment="Left" TextWrapping="Wrap" Text="常规" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="18" FontFamily="Times New Roman"/>
             <Line X1="10" Y1="35" X2="210" Y2="35" Stroke="Black" StrokeThickness="1"/>
             <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,47.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22.44" Width="120" FontSize="16" FontFamily="Times New Roman" ><Run Text="默认保存"/><Run Text="路径"/></TextBlock>
-            <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,75.24,0,0" TextWrapping="Wrap" Text="默认文件名" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
             <Button Content="浏览" HorizontalAlignment="Left" Margin="365.8,46.8,0,0" VerticalAlignment="Top" Width="78.2" Height="23.44" FontFamily="Times New Roman" FontSize="16" Click="Browse_Click"/>
             <Button Content="保存" HorizontalAlignment="Left" Margin="10,243.6,0,0" VerticalAlignment="Top" Width="78.2" Height="23.44" FontFamily="Times New Roman" FontSize="16" Click="Save_Click"/>
             <TextBox x:Name="PathBox" HorizontalAlignment="Left" Height="22.44" Margin="130,46.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16"/>
-            <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="22.44" Margin="130,74.24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16"/>
-            <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,101.68,0,0" TextWrapping="Wrap" Text="截图时隐藏" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
-            <CheckBox x:Name="HideCheck" Content="是" HorizontalAlignment="Left" Margin="130,101.68,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.021,-1.378" Height="18.4" Width="81.595" FontSize="14" FontFamily="Times New Roman"/>
+            <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,74.24,0,0" TextWrapping="Wrap" Text="截图时隐藏" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
+            <CheckBox x:Name="HideCheck" Content="是" HorizontalAlignment="Left" Margin="130,77.063,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.021,-1.378" Height="18.4" Width="81.595" FontSize="14" FontFamily="Times New Roman"/>
         </Grid>
     </Grid>
 </Page>

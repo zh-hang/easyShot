@@ -23,11 +23,28 @@ namespace easyShot.Pages
     /// </summary>
     /// 
 
+    public class Hide
+    {
+        public WindowHideMode hide;
+        public Hide(WindowHideMode hide)
+        {
+            this.hide = hide;
+        }
+        public void setHide(bool isHide)
+        {
+            hide =isHide? WindowHideMode.Hide:WindowHideMode.NotHide;
+        }
+        public bool ifHide()
+        {
+            return hide == WindowHideMode.Hide ? true : false;
+        }
+    }
+
     public class GeneralData : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private string path, name;
-        private bool hide;
+        private string path;
+        public Hide hide;
         public string Path
         {
             get { return path; }
@@ -40,42 +57,17 @@ namespace easyShot.Pages
                 }
             }
         }
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                name = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("Name"));
-                }
-            }
-        }
 
-        public bool Hide
+        public GeneralData(string path,WindowHideMode hide)
         {
-            get { return hide; }
-            set
-            {
-                hide = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("Hide"));
-                }
-            }
-        }
-
-        public GeneralData()
-        {
-            path = "123";
-            name = "123";
-            hide = true;
+            this.path = path;
+            this.hide = new Hide(hide);
         }
     }
 
     public partial class General : Page
     {
+        
         private ConfigManager configManager;
         public GeneralData generalData;
         public string test;
@@ -83,22 +75,20 @@ namespace easyShot.Pages
         {
             InitializeComponent();
             configManager = new ConfigManager();
-            generalData = new GeneralData();
+            generalData = new GeneralData(configManager.getshotfilepath(),configManager.getWindowHideMode());
             generalData.Path = configManager.getshotfilepath();
             PathBox.Text = generalData.Path;
-            NameBox.Text = generalData.Name;
-            HideCheck.IsChecked = generalData.Hide;
+            HideCheck.IsChecked = generalData.hide.ifHide();
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             generalData.Path = PathBox.Text;
-            generalData.Name = NameBox.Text;
-            generalData.Hide = HideCheck.IsEnabled;
+            generalData.hide.setHide((bool)HideCheck.IsChecked);
             configManager.setShotFilePath(generalData.Path);
-            System.Console.WriteLine(generalData.Path);
-            configManager.loadShotFilePath();
+            configManager.setWindowHideMode(generalData.hide.hide);
+            System.Console.WriteLine(configManager.getWindowHideMode().ToString());
             ConfigManager test = new ConfigManager();
-            System.Console.WriteLine(test.getshotfilepath());
+            System.Console.WriteLine(test.getWindowHideMode().ToString());
             MessageBox.Show("保存成功!");
         }
 
