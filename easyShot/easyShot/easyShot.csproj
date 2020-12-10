@@ -42,9 +42,6 @@
     <Reference Include="Aliyun.OSS, Version=2.12.0.0, Culture=neutral, PublicKeyToken=0ad4175f0dac0b9b, processorArchitecture=MSIL">
       <HintPath>..\packages\Aliyun.OSS.SDK.2.12.0\lib\net45\Aliyun.OSS.dll</HintPath>
     </Reference>
-    <Reference Include="Aliyun.OSS.Core, Version=2.12.0.0, Culture=neutral, PublicKeyToken=0ad4175f0dac0b9b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Aliyun.OSS.SDK.NetCore.2.12.0\lib\netstandard2.0\Aliyun.OSS.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -166,7 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
