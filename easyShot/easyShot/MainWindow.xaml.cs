@@ -15,10 +15,14 @@ namespace easyShot
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
     /// 
+    
+    // 图片类，用于展示图片
     public class Photo : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private string fullPath;
+
+        //图片的路径
         public string FullPath
         {
             get { return fullPath; }
@@ -33,10 +37,35 @@ namespace easyShot
         }
     }
 
+
+    // 界面文本框的内容
     public class TextShow : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private string account, password, address;
+        private class Hide
+        {
+            public ShotMode hide;
+            public Hide(ShotMode hide)
+            {
+                this.hide = hide;
+            }
+            public bool ifHide()
+            {
+                return hide== ShotMode.ShotSquare ? true:false;
+            }
+        }
+        Hide hide;
+
+        public TextShow(string account,string password,string address, ShotMode hide)
+        {
+            this.account = account;
+            this.password = password;
+            this.address = address;
+            this.hide = new Hide(hide);
+        }
+
+        //账号
         public string Account
         {
             get { return account; }
@@ -49,6 +78,8 @@ namespace easyShot
                 }
             }
         }
+
+        //密码
         public string Password
         {
             get { return password; }
@@ -61,6 +92,8 @@ namespace easyShot
                 }
             }
         }
+
+        //服务器地址
         public string Address
         {
             get { return address; }
@@ -78,25 +111,27 @@ namespace easyShot
 
     public partial class MainWindow : Window
     {
-        private Setting setting;
-        public BindingList<Photo> photos = new BindingList<Photo>();
-        public string photos_path;
+        private Setting setting;//设置窗口
+        public BindingList<Photo> photos = new BindingList<Photo>();//图片列表
+        public string photos_path;//图片文件夹路径
         public TextShow textShow;
-        private ConfigManager serverData;
+        private ConfigManager serverData;//配置文件数据
+
+        
 
         public MainWindow()
         {
-            photos_path = "\\images";
             InitializeComponent();
-            textShow = new TextShow();
             dataInit();
             photosInit();
         }
 
-
+        //所有数据初始化
         private void dataInit()
         {
-            //serverData = new ConfigManager();
+            serverData = new ConfigManager();
+            serverData.getShotMode();
+            photos_path = "\\images";
             //serverData.loadServerAccount();
             //serverData.loadServerAddress();
             //serverData.loadServerPassword();
@@ -105,6 +140,13 @@ namespace easyShot
             //addressBox.Text = serverData.getServerAddress();
         }
 
+
+        /// <summary>
+        /// 以下为图片相关函数
+        /// </summary>
+
+
+        //得到所有图片的路径
         private void getAllImagePath()
         {
             DirectoryInfo di = new DirectoryInfo(photos_path);
@@ -132,6 +174,7 @@ namespace easyShot
             }
         }
 
+        //检测图片名称是否重合
         private bool photosContain(string fullName)
         {
             foreach (var photo in photos)
@@ -147,6 +190,7 @@ namespace easyShot
 
         }
 
+        //图片列表初始化
         private void photosInit()
         {
             setPhotoPath();
@@ -183,6 +227,7 @@ namespace easyShot
             };
         }
 
+        //更新图片列表
         private void updatePhotoes()
         {
             setPhotoPath();
@@ -197,6 +242,16 @@ namespace easyShot
             };
         }
 
+
+
+        /// <summary>
+        /// 以下为云端相关函数
+        /// </summary>
+        /// 
+
+
+
+        //云端连接测试
         private void Connect_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("连接成功");
@@ -228,7 +283,7 @@ namespace easyShot
             }
         }
 
-
+        //打开设置界面
         private void Setting_Click(object sender, RoutedEventArgs e)
         {
             setting = new Setting();
@@ -236,6 +291,16 @@ namespace easyShot
             updatePhotoes();
         }
 
+
+
+        /// <summary>
+        /// /以下为截图相关函数
+        /// </summary>
+        /// 
+
+
+
+        //打开shot界面
         private void openShot(string kind)
         {
             CaptureWindow captureWindow = new CaptureWindow();
@@ -246,19 +311,19 @@ namespace easyShot
             shot.ShowDialog();
             updatePhotoes();
         }
-
+        //全屏截图
         private void FullShot_Click(object sender, RoutedEventArgs e)
         {
             CaptureWindow captureWindow = new CaptureWindow();
             captureWindow.GetPic_Desktop().Save(photos_path + "/31.jpg");
             updatePhotoes();
         }
-
+        //区域截图
         private void FieldShot_Click(object sender, RoutedEventArgs e)
         {
             openShot("field");
         }
-
+        //窗口截图
         private void Window_Click(object sender, RoutedEventArgs e)
         {
             openShot("window");
