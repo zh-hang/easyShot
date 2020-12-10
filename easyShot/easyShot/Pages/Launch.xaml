@@ -14,7 +14,7 @@
             <TextBlock Foreground="Black" HorizontalAlignment="Left" TextWrapping="Wrap" Text="启动" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="18" FontFamily="Times New Roman"/>
             <Line X1="10" Y1="35" X2="210" Y2="35" Stroke="Black" StrokeThickness="1"/>
             <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,47.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22.44" Width="120" FontSize="16" FontFamily="Times New Roman" Text="开机自启" />
-            <CheckBox Content="是" HorizontalAlignment="Left" Margin="130,50.623,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.021,-1.378" Height="18.4" Width="81.595" FontSize="14" FontFamily="Times New Roman"/>
+            <CheckBox x:Name="startModeSet" Content="是" HorizontalAlignment="Left" Margin="130,50.623,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.021,-1.378" Height="18.4" Width="81.595" FontSize="14" FontFamily="Times New Roman"/>
             <Button Content="保存" HorizontalAlignment="Left" Margin="10,243.6,0,0" VerticalAlignment="Top" Width="78.2" Height="23.44" FontFamily="Times New Roman" FontSize="16" Click="Save_Click"/>
         </Grid>
     </Grid>

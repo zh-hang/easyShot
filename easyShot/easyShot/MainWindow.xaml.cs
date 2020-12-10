@@ -15,36 +15,6 @@ namespace easyShot
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
     /// 
-
-    public class MousePos
-    {
-        private bool _started;
-        public int x0, y0, x1, y1;
-        public delegate void MouseClickHandler(object sender, System.Windows.Forms.MouseEventArgs e);
-        public event MouseClickHandler MouseClickEvent;
-        public delegate void MouseMoveHandler(object sender, System.Windows.Forms.MouseEventArgs e);
-        public event MouseMoveHandler MouseMoveEvent;
-
-        public void mouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            x0 = e.X;
-            y0 = e.Y;
-            _started = true;
-        }
-        public void mouseUp(object sender,System.Windows.Forms.MouseEventArgs e)
-        {
-            _started = false;
-        }
-        public void mouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            if (_started)
-            {
-                x1 = e.X;
-                y1 = e.Y;
-            }
-        }
-    }
-
     public class Photo : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -112,19 +82,28 @@ namespace easyShot
         public BindingList<Photo> photos = new BindingList<Photo>();
         public string photos_path;
         public TextShow textShow;
+        private ConfigManager serverData;
 
         public MainWindow()
         {
             photos_path = "\\images";
             InitializeComponent();
             textShow = new TextShow();
-            textShow.Account = "123456";
-            textShow.Address = "123456";
-            textShow.Password = "123456";
+            dataInit();
             photosInit();
         }
 
 
+        private void dataInit()
+        {
+            //serverData = new ConfigManager();
+            //serverData.loadServerAccount();
+            //serverData.loadServerAddress();
+            //serverData.loadServerPassword();
+            //accountBox.Text = serverData.getServerAccount();
+            //passwordBox.Text = serverData.getServerPassword();
+            //addressBox.Text = serverData.getServerAddress();
+        }
 
         private void getAllImagePath()
         {
@@ -223,6 +202,19 @@ namespace easyShot
             MessageBox.Show("连接成功");
         }
 
+        private void Sync_Click(object sender, RoutedEventArgs e)
+        {
+            Cloud cloud = new Cloud();
+            try
+            {
+                cloud.upLoadNewLocalFile();
+                cloud.downLoadNewCloudFile();
+            }catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void SaveImg(System.Drawing.Image image)
         {
             System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(image);
@@ -265,11 +257,6 @@ namespace easyShot
         private void FieldShot_Click(object sender, RoutedEventArgs e)
         {
             openShot("field");
-        }
-
-        private void Circle_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void Window_Click(object sender, RoutedEventArgs e)

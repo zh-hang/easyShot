@@ -84,7 +84,6 @@
                         </MenuItem.Header>
                         <MenuItem Header="全屏截图" Click="FullShot_Click"/>
                         <MenuItem Header="区域截图" Click="FieldShot_Click"/>
-                        <MenuItem Header="椭圆截图" Click="Circle_Click"/>
                         <MenuItem Header="窗口截图" Click="Window_Click"/>
                     </MenuItem>
                 </Menu>
@@ -96,15 +95,16 @@
                     <Line X1="10" Y1="35" X2="210" Y2="35" Stroke="Black" StrokeThickness="1"/>
                     <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,47.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22.44" Width="120" FontSize="16" FontFamily="Times New Roman" Text="账号"  />
                     <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,104.68,0,0" TextWrapping="Wrap" Text="服务器地址" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
-                    <Button Content="连接" HorizontalAlignment="Left" Margin="365.8,102.16,0,0" VerticalAlignment="Top" Width="78.2" Height="23.44" FontFamily="Times New Roman" FontSize="16" RenderTransformOrigin="0.488,2.09" Click="Connect_Click"/>
                     <TextBlock Foreground="Black" HorizontalAlignment="Left" TextWrapping="Wrap" Text="备份" VerticalAlignment="Top" Margin="10,137.28,0,0" FontSize="18" FontFamily="Times New Roman"/>
                     <Line X1="10" Y1="35" X2="210" Y2="35" Stroke="Black" StrokeThickness="1" Margin="0,127.28,0,-127.28"/>
                     <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,176.573,0,0" TextWrapping="Wrap" Text="自动备份" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
                     <CheckBox Content="是" HorizontalAlignment="Left" Margin="130,176.573,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.021,-1.378" Height="18.4" Width="81.595" FontSize="14" FontFamily="Times New Roman"/>
                     <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,76.24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22.44" Width="120" FontSize="16" FontFamily="Times New Roman" Text="密码" />
-                    <TextBox HorizontalAlignment="Left" Height="22.44" Margin="130,46.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16" Text="{Binding Path=textShow.Account,Mode=TwoWay}"/>
-                    <TextBox HorizontalAlignment="Left" Height="22.44" Margin="130,103.68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16" Text="{Binding Path=textShow.Address,Mode=TwoWay}"/>
-                    <TextBox HorizontalAlignment="Left" Height="22.44" Margin="130,75.24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16" Text="{Binding Path=textShow.Password,Mode=TwoWay}"/>
+                    <TextBox x:Name="accountBox" HorizontalAlignment="Left" Height="22.44" Margin="130,46.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16" />
+                    <TextBox x:Name="passwordBox" HorizontalAlignment="Left" Height="22.44" Margin="130,103.68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16"/>
+                    <TextBox x:Name="addressBox" HorizontalAlignment="Left" Height="22.44" Margin="130,75.24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16"/>
+                    <Button Content="连接" HorizontalAlignment="Left" Margin="365.8,102.16,0,0" VerticalAlignment="Top" Width="78.2" Height="23.44" FontFamily="Times New Roman" FontSize="16" RenderTransformOrigin="0.488,2.09" Click="Connect_Click"/>
+                    <Button Content="强制同步" HorizontalAlignment="Left" Margin="10,274.56,0,0" VerticalAlignment="Top" Width="95" Height="35" FontFamily="Times New Roman" FontSize="16" RenderTransformOrigin="0.488,2.09" Click="Sync_Click"/>
                 </Grid>
             </DockPanel>
         </DockPanel>
