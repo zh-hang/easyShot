@@ -16,8 +16,8 @@ namespace easyShot
  
         private Point Point_push;
         private Point Point_out;
-        private double width;//源图像的宽度
-        private double height;//源图像的长度
+        private int width;//源图像的宽度
+        private int height;//源图像的长度
         private Image image;//图片
         private string name;//图片名字
 
@@ -46,7 +46,7 @@ namespace easyShot
             IntPtr hdcSrc = User32.GetWindowDC(hWnd);
             // 创建与指定设备兼容的存储器设备上下文(DC)
             IntPtr hdcDest = Gdi32.CreateCompatibleDC(hdcSrc);
-            // 获取大小
+            // 获取窗口大小
             User32.RECT windowRect = new User32.RECT();
             User32.GetWindowRect(hWnd, ref windowRect);
             //设置长宽
@@ -79,34 +79,33 @@ namespace easyShot
         }
 
         //通过鼠标前后两个位置来获取图片
-        public Image GetPic_ByMouse()
+        public Image GetPic_ByMouse(IntPtr hWnd)
         {
 
             Image img;
-            //使用全屏窗口的句柄
-            IntPtr hWnd = User32.GetDesktopWindow();
-
             // 根据句柄获取设备上下文句柄
             IntPtr hdcSrc = User32.GetWindowDC(hWnd);
             // 创建与指定设备兼容的存储器设备上下文(DC)
             IntPtr hdcDest = Gdi32.CreateCompatibleDC(hdcSrc);
-
             // 使用bitmap对象来存设备上下文数据
-            IntPtr hBitmap = Gdi32.CreateCompatibleBitmap(hdcSrc, width, height);
+            IntPtr hBitmap = Gdi32.CreateCompatibleBitmap(hdcSrc, width ,height);
             // 选择bitmap对象到指定设备上下文环境中
             IntPtr hOld = Gdi32.SelectObject(hdcDest, hBitmap);
 
             // 执行与指定源设备上下文的像素矩形对应的颜色数据的位块传输到目标设备上下文
-            Gdi32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, Point_push.X, Point_push.Y, Gdi32.SRCCOPY);
-
-            // 恢复设备上下文环境
-            Gdi32.SelectObject(hdcDest, hOld);
+            Gdi32.BitBlt(hdcDest, 0, 0, width, height,hdcSrc,0, 0, Gdi32.SRCCOPY);
+         
+           // 恢复设备上下文环境
+           Gdi32.SelectObject(hdcDest, hOld);
             // 释放句柄
-            Gdi32.DeleteDC(hdcDest);
-            User32.ReleaseDC(hWnd, hdcSrc);
+           Gdi32.DeleteDC(hdcDest);
+           User32.ReleaseDC(hWnd, hdcSrc);
+
             // 将数据流转换成图
             img = Image.FromHbitmap(hBitmap);
             // 释放bitmap对象
+            Gdi32.DeleteDC(hdcSrc);
+        
             Gdi32.DeleteObject(hBitmap);
             return img;
         }
@@ -137,17 +136,32 @@ namespace easyShot
             //参数获取
             this.Point_push = p1;
             this.Point_out = p2;
-            this.width = System.Math.Abs(Point_push.X -Point_push.X);
-            this.height = System.Math.Abs(Point_out.Y-Point_out.Y);
-            img = GetPic_ByMouse();//通过鼠标
+            this.width = System.Math.Abs(Point_out.X - Point_push.X);
+
+            this.height = System.Math.Abs(Point_out.Y- Point_push.Y);
+
+            //使用全屏窗口的句柄
+            IntPtr hWnd = User32.GetDesktopWindow();
+            img = GetPic_ByMouse(hWnd);//通过鼠标
             return img;
 
         }//根据鼠标移动生成的矩形获取对应的图片
+
+     
 
         //public static Image GetPic_AnyShape()
         //{
 
         //}
+
+        public IntPtr FindWindow_ByPoint(int x,int y)
+        {
+            IntPtr hWnd;
+            hWnd = GetWindowBymouse.WindowFromPoint(x, y);//根据位置找到对应窗口句柄
+            User32.SetForegroundWindow(hWnd);//根据句柄设置焦点窗口
+            hWnd = User32.GetForegroundWindow();//返回当前焦点窗口的句柄
+            return hWnd;
+        }
 
         public class User32//用来窗口与用户交互
         {
@@ -174,8 +188,9 @@ namespace easyShot
             //获取窗口类名 
             [DllImport("user32.dll")]
             public static extern int GetClassName(IntPtr hWnd, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder lpString, int nMaxCount);
-
-
+            //设置前置窗口
+            [DllImport("user32.dll")]
+            public static extern bool SetForegroundWindow(IntPtr hWnd);
 
             //获取所有的窗口对象
             public WindowInfo[] GetAllDesktopWindows()
@@ -286,20 +301,12 @@ namespace easyShot
             [DllImport("gdi32.dll")]
             public static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
 
-            internal static void BitBlt(IntPtr hdcDest, int v1, int v2, int width, int height, IntPtr hdcSrc, double x, double y, int sRCCOPY)
+            internal static void BitBlt(IntPtr hdcDest, int v1, int v2, double width, double height, IntPtr hdcSrc, int x, int y, int sRCCOPY)
             {
                 throw new NotImplementedException();
             }
 
-            internal static void BitBlt(IntPtr hdcDest, int v1, int v2, double width, double height, IntPtr hdcSrc, double x, double y, int sRCCOPY)
-            {
-                throw new NotImplementedException();
-            }
-
-            internal static IntPtr CreateCompatibleBitmap(IntPtr hdcSrc, double width, double height)
-            {
-                throw new NotImplementedException();
-            }
+           
         }
 
 
