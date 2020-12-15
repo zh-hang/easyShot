@@ -12,8 +12,8 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <WrapPanel VerticalAlignment="Center" Background="#FF3C324E">
-            <Button Tag="General" Name="btnA" Height="30" Width="60" Margin="5" Click="BtnNav_Click">页面A</Button>
-            <Button Tag="Launch" Name="btnB" Height="30" Width="60" Click="BtnNav_Click">页面B</Button>
+            <Button Tag="General" Name="btnA" Height="30" Width="60" Margin="5" Click="BtnNav_Click">常规</Button>
+            <Button Tag="Launch" Name="btnB" Height="30" Width="60" Click="BtnNav_Click">启动</Button>
         </WrapPanel>
         <Frame Name="frmMain" NavigationUIVisibility="Hidden" Margin="0,5,0,0" Grid.Row="1"/>
     </Grid>

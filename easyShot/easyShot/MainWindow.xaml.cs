@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Controls;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Threading;
 
 namespace easyShot
 {
@@ -114,12 +115,14 @@ namespace easyShot
     {
         private Setting setting;//设置窗口
         public BindingList<Photo> photos = new BindingList<Photo>();//图片列表
-        public string photos_path;//图片文件夹路径
+        public string photosPath;//图片文件夹路径
+        private string photoName;
         private int counter;
         public TextShow textShow;
         private ConfigManager serverData;//配置文件数据
         private Cloud cloudConnection;
         private bool isConnected;
+        WindowHideMode ifHiden;
 
         public MainWindow()
         {
@@ -129,19 +132,6 @@ namespace easyShot
             KeyDown += FullKeyDown;
             KeyDown += RectKeyDown;
             KeyDown += WindowKeyDown;
-            //try
-            //{
-            //    InitializeComponent();
-            //    dataInit();
-            //    photosInit();
-            //    KeyDown += FullKeyDown;
-            //    KeyDown += RectKeyDown;
-            //    KeyDown += WindowKeyDown;
-            //}
-            //catch (Exception e)
-            //{
-            //    MessageBox.Show(e.Message);
-            //}
         }
 
         //所有数据初始化
@@ -151,10 +141,12 @@ namespace easyShot
             {
                 isConnected = false;
                 serverData = new ConfigManager();
-                photos_path = serverData.getshotfilepath();
+                photosPath = serverData.getshotfilepath();
                 accountBox.Text = serverData.getServerAccount();
                 passwordBox.Password = serverData.getServerPassword();
                 addressBox.Text = serverData.getServerAddress();
+                counter = serverData.getFileCounter();
+                ifHiden = serverData.getWindowHideMode();
                 cloudConnection = new Cloud();
             }
             catch (Exception ex)
@@ -168,6 +160,8 @@ namespace easyShot
         {
             setting = new Setting();
             setting.ShowDialog();
+            ifHiden = serverData.getWindowHideMode();
+            photosPath = serverData.getshotfilepath();
             updatePhotoes();
         }
 
@@ -373,6 +367,11 @@ namespace easyShot
         //打开shot界面
         private void openShot(string kind)
         {
+            if (ifHiden == WindowHideMode.Hide)
+            {
+                WindowState = WindowState.Minimized;
+                Thread.Sleep(100);
+            }
             CaptureWindow captureWindow = new CaptureWindow();
             photoName = "\\" + counter.ToString() + ".jpg";
             counter += 1;
@@ -381,26 +380,41 @@ namespace easyShot
             shot.WindowStyle = System.Windows.WindowStyle.None;
             shot.WindowState = System.Windows.WindowState.Maximized;
             shot.ShowDialog();
+            if (ifHiden == WindowHideMode.Hide)
+            {
+                Thread.Sleep(100);
+                WindowState = WindowState.Normal;
+            }
             updatePhotoes();
-            serverData.setCounter(counter.ToString());
+            serverData.setFileCounter(counter);
+
         }
         //全屏截图
         private void fullShot()
         {
+            if (ifHiden == WindowHideMode.Hide)
+            {
+                WindowState = WindowState.Minimized;
+                Thread.Sleep(200);
+            }
             CaptureWindow captureWindow = new CaptureWindow();
             photoName = "\\" + counter.ToString() + ".jpg";
             counter += 1;
             try
             {
                 captureWindow.GetPic_Desktop().Save(photosPath + photoName);
-
             }
             catch (Exception e)
             {
                 fullShot();
             }
+            if (ifHiden == WindowHideMode.Hide)
+            {
+                Thread.Sleep(200);
+                WindowState = WindowState.Normal;
+            }
             updatePhotoes();
-            serverData.setCounter(counter.ToString());
+            serverData.setFileCounter(counter);
         }
 
         private void FullShot_Click(object sender, RoutedEventArgs e)
