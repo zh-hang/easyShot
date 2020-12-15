@@ -13,7 +13,7 @@ namespace easyShot
     class CaptureWindow
     {
 
- 
+
         private Point Point_push;
         private Point Point_out;
         private int width;//源图像的宽度
@@ -36,7 +36,11 @@ namespace easyShot
         public Image getPicture() { return this.image; }
 
         //默认构造函数
-        public CaptureWindow() { }
+        public CaptureWindow()
+        {
+            this.Point_push = new Point(0, 0);
+            this.Point_out = new Point(0, 0);
+        }
 
 
         //通过句柄来获取图片
@@ -56,7 +60,7 @@ namespace easyShot
             //图片长宽和起点赋值
             this.width = width;
             this.height = height;
-            this.Point_push.X=0;
+            this.Point_push.X = 0;
             this.Point_push.Y = 0;
 
             // 使用bitmap对象来存设备上下文数据
@@ -88,24 +92,24 @@ namespace easyShot
             // 创建与指定设备兼容的存储器设备上下文(DC)
             IntPtr hdcDest = Gdi32.CreateCompatibleDC(hdcSrc);
             // 使用bitmap对象来存设备上下文数据
-            IntPtr hBitmap = Gdi32.CreateCompatibleBitmap(hdcSrc, width ,height);
+            IntPtr hBitmap = Gdi32.CreateCompatibleBitmap(hdcSrc, width, height);
             // 选择bitmap对象到指定设备上下文环境中
             IntPtr hOld = Gdi32.SelectObject(hdcDest, hBitmap);
 
             // 执行与指定源设备上下文的像素矩形对应的颜色数据的位块传输到目标设备上下文
-            Gdi32.BitBlt(hdcDest, 0, 0, width, height,hdcSrc,0, 0, Gdi32.SRCCOPY);
-         
-           // 恢复设备上下文环境
-           Gdi32.SelectObject(hdcDest, hOld);
+            Gdi32.BitBlt(hdcDest, this.Point_push.X, this.Point_push.Y, width, height, hdcSrc, 0, 0, Gdi32.SRCCOPY);
+
+            // 恢复设备上下文环境
+            Gdi32.SelectObject(hdcDest, hOld);
             // 释放句柄
-           Gdi32.DeleteDC(hdcDest);
-           User32.ReleaseDC(hWnd, hdcSrc);
+            Gdi32.DeleteDC(hdcDest);
+            User32.ReleaseDC(hWnd, hdcSrc);
 
             // 将数据流转换成图
             img = Image.FromHbitmap(hBitmap);
             // 释放bitmap对象
             Gdi32.DeleteDC(hdcSrc);
-        
+
             Gdi32.DeleteObject(hBitmap);
             return img;
         }
@@ -129,7 +133,7 @@ namespace easyShot
             return img;
         }//根据鼠标位置获取对应窗口的图片
 
-        public Image GetPic_Retangle(Point p1 ,Point p2)//获取鼠标点击和松开后的图片
+        public Image GetPic_Retangle(Point p1, Point p2)//获取鼠标点击和松开后的图片
         {
 
             Image img;
@@ -138,7 +142,7 @@ namespace easyShot
             this.Point_out = p2;
             this.width = System.Math.Abs(Point_out.X - Point_push.X);
 
-            this.height = System.Math.Abs(Point_out.Y- Point_push.Y);
+            this.height = System.Math.Abs(Point_out.Y - Point_push.Y);
 
             //使用全屏窗口的句柄
             IntPtr hWnd = User32.GetDesktopWindow();
@@ -147,14 +151,14 @@ namespace easyShot
 
         }//根据鼠标移动生成的矩形获取对应的图片
 
-     
+
 
         //public static Image GetPic_AnyShape()
         //{
 
         //}
 
-        public IntPtr FindWindow_ByPoint(int x,int y)
+        public IntPtr FindWindow_ByPoint(int x, int y)
         {
             IntPtr hWnd;
             hWnd = GetWindowBymouse.WindowFromPoint(x, y);//根据位置找到对应窗口句柄
@@ -306,7 +310,7 @@ namespace easyShot
                 throw new NotImplementedException();
             }
 
-           
+
         }
 
 

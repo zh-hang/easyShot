@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Windows.Data;
 using System.Windows.Controls;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace easyShot
 {
@@ -125,6 +126,22 @@ namespace easyShot
             InitializeComponent();
             dataInit();
             photosInit();
+            KeyDown += FullKeyDown;
+            KeyDown += RectKeyDown;
+            KeyDown += WindowKeyDown;
+            //try
+            //{
+            //    InitializeComponent();
+            //    dataInit();
+            //    photosInit();
+            //    KeyDown += FullKeyDown;
+            //    KeyDown += RectKeyDown;
+            //    KeyDown += WindowKeyDown;
+            //}
+            //catch (Exception e)
+            //{
+            //    MessageBox.Show(e.Message);
+            //}
         }
 
         //所有数据初始化
@@ -162,10 +179,10 @@ namespace easyShot
         //得到所有图片的路径
         private void getAllImagePath()
         {
-            DirectoryInfo di = new DirectoryInfo(photos_path);
+            DirectoryInfo di = new DirectoryInfo(photosPath);
             if (!di.Exists)
             {
-                Directory.CreateDirectory(photos_path);
+                Directory.CreateDirectory(photosPath);
             }
             FileInfo[] files = di.GetFiles("*.*", SearchOption.AllDirectories);
             if (files != null && files.Length > 0)
@@ -207,10 +224,10 @@ namespace easyShot
         private void photosInit()
         {
             setPhotoPath();
-            DirectoryInfo di = new DirectoryInfo(photos_path);
+            DirectoryInfo di = new DirectoryInfo(photosPath);
             if (!di.Exists)
             {
-                Directory.CreateDirectory(photos_path);
+                Directory.CreateDirectory(photosPath);
             }
             FileInfo[] files = di.GetFiles("*.*", SearchOption.AllDirectories);
             if (files != null && files.Length > 0)
@@ -326,25 +343,69 @@ namespace easyShot
         /// 
 
 
+        /// 快捷键
+        /// 全屏截图快捷键
+        private void FullKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.F)
+            {
+                fullShot();
+
+            }
+        }
+
+        private void RectKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.R)
+            {
+                openShot("field");
+            }
+        }
+
+        private void WindowKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.W)
+            {
+                openShot("window");
+            }
+        }
 
         //打开shot界面
         private void openShot(string kind)
         {
             CaptureWindow captureWindow = new CaptureWindow();
-            Shot shot = new Shot(captureWindow.GetPic_Desktop(), photos_path + counter.ToString() + ".jpg", kind);
+            photoName = "\\" + counter.ToString() + ".jpg";
+            counter += 1;
+            Shot shot = new Shot(captureWindow.GetPic_Desktop(), photosPath + photoName, kind);
             shot.Topmost = true;
             shot.WindowStyle = System.Windows.WindowStyle.None;
             shot.WindowState = System.Windows.WindowState.Maximized;
             shot.ShowDialog();
             updatePhotoes();
+            serverData.setCounter(counter.ToString());
         }
         //全屏截图
-        private void FullShot_Click(object sender, RoutedEventArgs e)
+        private void fullShot()
         {
             CaptureWindow captureWindow = new CaptureWindow();
+            photoName = "\\" + counter.ToString() + ".jpg";
             counter += 1;
-            captureWindow.GetPic_Desktop().Save(photos_path + counter.ToString() + ".jpg");
+            try
+            {
+                captureWindow.GetPic_Desktop().Save(photosPath + photoName);
+
+            }
+            catch (Exception e)
+            {
+                fullShot();
+            }
             updatePhotoes();
+            serverData.setCounter(counter.ToString());
+        }
+
+        private void FullShot_Click(object sender, RoutedEventArgs e)
+        {
+            fullShot();
         }
         //区域截图
         private void FieldShot_Click(object sender, RoutedEventArgs e)

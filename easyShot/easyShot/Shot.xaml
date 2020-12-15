@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:easyShot"
         mc:Ignorable="d"
         Title="Shot" Height="1080" Width="1920"
-        KeyDown="Grid_PreviewKeyDown"
+        KeyDown="EscKeyDown"
         
         >
     <!--MouseDown="Window_MouseDown"
