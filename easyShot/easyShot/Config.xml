@@ -6,4 +6,5 @@
 	<shotfilepath content="C:\Users\liaoj\Desktop\test"/>
 	<startmode content="startautomaticallty"/>
 	<shotmode content="shotsquare"/>
+	<counter content="10"/>
 </configuration>

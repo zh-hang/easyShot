@@ -42,6 +42,7 @@ namespace easyShot
         private const string serveraddresslabel = "//configuration/serveraddress";
         private const string serveraccountlabel = "//configuration/serveraccount";
         private const string serverpasswordlabel = "//configuration/serverpassword";
+        private const string counterlabel = "//configuration/counter";
 
         private System.Xml.XmlDocument configXmlFile;
         private System.Xml.XmlNode root;
@@ -52,6 +53,7 @@ namespace easyShot
         private string serverAddress;
         private string serverAccount;
         private string serverPassword;
+        private string counter;
 
         public ConfigManager()
         {
@@ -60,6 +62,7 @@ namespace easyShot
             this.configXmlFile = new System.Xml.XmlDocument();
             this.configXmlFile.Load(this.configXmlFilePath);
             loadShotFilePath();
+            loadCounter();
             //loadStartMode();
             //loadShotMode();
             this.shotMode = easyShot.ShotMode.ShotSquare;
@@ -209,6 +212,26 @@ namespace easyShot
             if (node == null) throw new System.Exception("the Configure file is illegal!");
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
             element.SetAttribute("content", newServerpassword);
+            configXmlFile.Save(configXmlFilePath);
+        }
+        public void loadCounter()
+        {
+            System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(counterlabel);
+            if (node == null) throw new System.Exception("the Configure file is illegal!");
+            System.Xml.XmlElement element = (System.Xml.XmlElement)node;
+            this.counter = element.GetAttribute("content").ToString();
+        }
+        public string getCounter()
+        {
+            return this.counter;
+        }
+        public void setCounter(string newCounter)
+        {
+            this.counter = newCounter;
+            System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(counterlabel);
+            if (node == null) throw new System.Exception("the Configure file is illegal!");
+            System.Xml.XmlElement element = (System.Xml.XmlElement)node;
+            element.SetAttribute("content", newCounter.ToString());
             configXmlFile.Save(configXmlFilePath);
         }
     }

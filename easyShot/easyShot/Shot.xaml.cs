@@ -156,7 +156,7 @@ namespace easyShot
             MouseDown += MainWindow_Double_MouseDown;
         }
 
-        private void Grid_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void EscKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
@@ -166,19 +166,21 @@ namespace easyShot
 
         private void savePhoto()
         {
-            img.Save(path);
             if (ifShot)
             {
                 CaptureWindow captureWindow = new CaptureWindow();
                 if (kind == "field")
                 {
-                    WindowState = WindowState.Minimized;
                     Thread.Sleep(50);
+                    System.Console.WriteLine(_downPoint);
+                    System.Console.WriteLine(_upPoint);
                     captureWindow.GetPic_Retangle(_downPoint, _upPoint).Save(path);
 
                 }
                 else if (kind == "window")
-                    captureWindow.GetPic_ByHwnd(hWnd);
+                {
+                    captureWindow.GetPic_ByHwnd(hWnd).Save(path);
+                }
             }
             else
             {
