@@ -3,12 +3,8 @@
 	<startup>
 		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
 	</startup>
-	<startmode content="startautomaticallty" />
-	<shotmode content="shotsquare" />
-	<shotfilepath content="E:\images"/>
-	<filecounter content="8" />
-	<windowhidemode content="NotHide" />
-	<serveraddress content="oss-cn-beijing.aliyuncs.com" />
-	<serveraccount content="LTAI4G314vpy85zUx9vEj7Hd" />
-	<serverpassword content="LQEhWW448KFfepVwSHErIfo6KmYtFm" />
+	<shotfilepath content="C:\Users\liaoj\Desktop\test"/>
+	<startmode content="startautomaticallty"/>
+	<shotmode content="shotsquare"/>
+	<counter content="10"/>
 </configuration>

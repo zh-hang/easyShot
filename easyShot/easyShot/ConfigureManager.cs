@@ -13,11 +13,6 @@ namespace easyShot
         ShotWindow,
         ShotSquare
     }
-    public enum WindowHideMode
-    {
-        Hide,
-        NotHide
-    }
     //为了便于进行单元测试，暂时将这些类设为公共类
     public class ConfigManager
     {
@@ -42,25 +37,23 @@ namespace easyShot
         //label表示是应用在xml中的xpath
         private const string xmlfilerootlabellabel = "configuration";
         private const string shotfilepathlabel = "//configuration/shotfilepath";
-        private const string filecounterlabel = "//configuration/filecounter";
         private const string startmodelabel = "//configuration/startmode";
         private const string shotmodelabel = "//configuration/shotmode";
         private const string serveraddresslabel = "//configuration/serveraddress";
         private const string serveraccountlabel = "//configuration/serveraccount";
         private const string serverpasswordlabel = "//configuration/serverpassword";
-        private const string windowhidemodelabel = "//configuration/windowhidemode";
+        private const string counterlabel = "//configuration/counter";
 
         private System.Xml.XmlDocument configXmlFile;
         private System.Xml.XmlNode root;
         private string shotFilePath;
-        private int filecounter;
         private string configXmlFilePath;
         private StartMode startMode;
         private ShotMode shotMode;
-        private WindowHideMode windowHideMode;
         private string serverAddress;
         private string serverAccount;
         private string serverPassword;
+        private string counter;
 
         public ConfigManager()
         {
@@ -68,19 +61,13 @@ namespace easyShot
             //打开失败异常
             this.configXmlFile = new System.Xml.XmlDocument();
             this.configXmlFile.Load(this.configXmlFilePath);
-            loadConfig();
-        }
-        public void loadConfig()
-        {
             loadShotFilePath();
-            loadFileCounter();
-            loadStartMode();
-            loadShotMode();
-            loadServerAccount();
-            loadServerAddress();
-            loadServerPassword();
-            loadWindowHideMode();
+            loadCounter();
+            //loadStartMode();
+            //loadShotMode();
+            this.shotMode = easyShot.ShotMode.ShotSquare;
         }
+
         public void loadconfigXmlFilePath()
         {
             this.configXmlFilePath = @".\Config.xml";
@@ -88,7 +75,6 @@ namespace easyShot
         }
         public void loadShotFilePath()
         {
-            this.configXmlFile.Load(this.configXmlFilePath);
             System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(shotfilepathlabel);
             if (node == null) throw new System.Exception("the Configure file is illegal!");
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
@@ -97,7 +83,6 @@ namespace easyShot
         }
         public string getshotfilepath()
         {
-            loadShotFilePath();
             return this.shotFilePath;
         }
         public void setShotFilePath(string newFilePath)
@@ -111,19 +96,17 @@ namespace easyShot
         }
         public void loadStartMode()
         {
-            this.configXmlFile.Load(this.configXmlFilePath);
             System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(startmodelabel);
             if (node == null) throw new System.Exception("the Configure file is illegal!");
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
             string temp = element.GetAttribute("content").ToString();
             if (temp == ConfigManager.startautomaticallty)
                 this.startMode = easyShot.StartMode.StartAutomaticallty;
-            else if (temp == ConfigManager.startmanually)
+            if (temp == ConfigManager.startmanually)
                 this.startMode = easyShot.StartMode.StartManually;
         }
         public StartMode getStartMode()
         {
-            loadStartMode();
             return this.startMode;
         }
         public void setStartMode(StartMode NewStartMode)
@@ -135,7 +118,7 @@ namespace easyShot
 
             if (NewStartMode == easyShot.StartMode.StartAutomaticallty)
                 element.SetAttribute("content", ConfigManager.startautomaticallty);
-            else if (NewStartMode == easyShot.StartMode.StartManually)
+            if (NewStartMode == easyShot.StartMode.StartManually)
                 element.SetAttribute("content", ConfigManager.startmanually);
             else
                 element.SetAttribute("content", ConfigManager.startmanually);
@@ -143,31 +126,29 @@ namespace easyShot
         }
         public void loadShotMode()
         {
-            this.configXmlFile.Load(this.configXmlFilePath);
             System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(shotmodelabel);
             if (node == null) throw new System.Exception("the Configure file is illegal!");
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
             string temp = element.GetAttribute("content").ToString();
             if (temp == ConfigManager.startautomaticallty)
                 this.startMode = easyShot.StartMode.StartAutomaticallty;
-            else if (temp == ConfigManager.startmanually)
+            if (temp == ConfigManager.startmanually)
                 this.startMode = easyShot.StartMode.StartManually;
         }
         public ShotMode getShotMode()
         {
-            loadShotMode();
             return this.shotMode;
         }
         public void setShotMode(ShotMode newShotMode)
         {
             this.shotMode = newShotMode;
-            System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(shotmodelabel);
+            System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(shotfilepathlabel);
             if (node == null) throw new System.Exception("the Configure file is illegal!");
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
 
             if (newShotMode == easyShot.ShotMode.ShotSquare)
                 element.SetAttribute("content", ConfigManager.shotsquare);
-            else if (newShotMode == easyShot.ShotMode.ShotWindow)
+            if (newShotMode == easyShot.ShotMode.ShotWindow)
                 element.SetAttribute("content", ConfigManager.shotwindow);
             else
                 element.SetAttribute("content", ConfigManager.shotsquare);
@@ -175,7 +156,6 @@ namespace easyShot
         }
         public void loadServerAddress()
         {
-            this.configXmlFile.Load(this.configXmlFilePath);
             System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(serveraddresslabel);
             if (node == null) throw new System.Exception("the Configure file is illegal!");
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
@@ -183,7 +163,6 @@ namespace easyShot
         }
         public string getServerAddress()
         {
-            loadServerAddress();
             return this.serverAddress;
         }
         public void setServerAddress(string newServerAddress)
@@ -197,7 +176,6 @@ namespace easyShot
         }
         public void loadServerAccount()
         {
-            this.configXmlFile.Load(this.configXmlFilePath);
             System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(serveraccountlabel);
             if (node == null) throw new System.Exception("the Configure file is illegal!");
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
@@ -205,7 +183,6 @@ namespace easyShot
         }
         public string getServerAccount()
         {
-            loadServerAccount();
             return this.serverAccount;
         }
         public void setServerAccount(string newServerAccount)
@@ -219,7 +196,6 @@ namespace easyShot
         }
         public void loadServerPassword()
         {
-            this.configXmlFile.Load(this.configXmlFilePath);
             System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(serverpasswordlabel);
             if (node == null) throw new System.Exception("the Configure file is illegal!");
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
@@ -227,7 +203,6 @@ namespace easyShot
         }
         public string getServerPassword()
         {
-            loadServerPassword();
             return this.serverPassword;
         }
         public void setServerPassword(string newServerpassword)
@@ -239,60 +214,24 @@ namespace easyShot
             element.SetAttribute("content", newServerpassword);
             configXmlFile.Save(configXmlFilePath);
         }
-        public void loadFileCounter()
+        public void loadCounter()
         {
-            this.configXmlFile.Load(this.configXmlFilePath);
-            System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(filecounterlabel);
+            System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(counterlabel);
             if (node == null) throw new System.Exception("the Configure file is illegal!");
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
-            this.filecounter = System.Convert.ToInt32(element.GetAttribute("content").ToString());
+            this.counter = element.GetAttribute("content").ToString();
         }
-        public int getFileCounter()
+        public string getCounter()
         {
-            loadFileCounter();
-            return this.filecounter;
+            return this.counter;
         }
-        public void setFileCounter(int newfilecounter)
+        public void setCounter(string newCounter)
         {
-            this.filecounter = newfilecounter;
-            System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(filecounterlabel);
+            this.counter = newCounter;
+            System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(counterlabel);
             if (node == null) throw new System.Exception("the Configure file is illegal!");
             System.Xml.XmlElement element = (System.Xml.XmlElement)node;
-            element.SetAttribute("content", newfilecounter.ToString());
-            configXmlFile.Save(configXmlFilePath);
-        }
-        public void loadWindowHideMode()
-        {
-            this.configXmlFile.Load(this.configXmlFilePath);
-            System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(windowhidemodelabel);
-            if (node == null) throw new System.Exception("the Configure file is illegal!");
-            System.Xml.XmlElement element = (System.Xml.XmlElement)node;
-            string temp = element.GetAttribute("content").ToString();
-            if (temp == easyShot.WindowHideMode.NotHide.ToString())
-                this.windowHideMode = easyShot.WindowHideMode.NotHide;
-            else if (temp == easyShot.WindowHideMode.Hide.ToString())
-                this.windowHideMode = easyShot.WindowHideMode.Hide;
-            else
-                this.windowHideMode = easyShot.WindowHideMode.Hide;
-        }
-        public WindowHideMode getWindowHideMode()
-        {
-            loadWindowHideMode();
-            return this.windowHideMode;
-        }
-        public void setWindowHideMode(WindowHideMode newWindowHideMode)
-        {
-            this.windowHideMode = newWindowHideMode;
-            System.Xml.XmlNode node = this.configXmlFile.SelectSingleNode(windowhidemodelabel);
-            if (node == null) throw new System.Exception("the Configure file is illegal!");
-            System.Xml.XmlElement element = (System.Xml.XmlElement)node;
-
-            if (newWindowHideMode == easyShot.WindowHideMode.Hide)
-                element.SetAttribute("content", easyShot.WindowHideMode.Hide.ToString());
-            else if (newWindowHideMode == easyShot.WindowHideMode.NotHide)
-                element.SetAttribute("content", easyShot.WindowHideMode.NotHide.ToString());
-            else
-                element.SetAttribute("content", easyShot.WindowHideMode.NotHide.ToString());
+            element.SetAttribute("content", newCounter.ToString());
             configXmlFile.Save(configXmlFilePath);
         }
     }
