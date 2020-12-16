@@ -4,19 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:easyShot"
-        xmlns:viewmodels="clr-namespace:easyShot.ViewModels"
-        xmlns:views="clr-namespace:easyShot.Views"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="easyShot.MainWindow"
         mc:Ignorable="d"
         Title="EasyShot" Height="450" Width="800"
     >
     <Window.Resources>
-        <!--<DataTemplate x:Name="settingViewTemplate" DataType="{x:Type viewmodels:SettingViewModel}">
-            <views:SettingView DataContext="{Binding}"/>
-        </DataTemplate>
-        <DataTemplate x:Name="cloudViewTemplate" DataType="{x:Type viewmodels:CloudViewModel}">
-            <views:CloudView DataContext="{Binding}"/>
-        </DataTemplate>-->
 
         <Style x:Key="NavigationButton" TargetType="{x:Type Button}">
             <Setter Property="FontFamily" Value="Times New Roman" />
@@ -26,20 +18,20 @@
             <!--样式触发器-->
             <Style.Triggers>
                 <!--获得焦点时触发-->
-                <Trigger Property="IsFocused" Value="True">
+                <!--<Trigger Property="IsFocused" Value="True">
                     <Setter Property="FontSize" Value="20" />
                     <Setter Property="Foreground" Value="#FFA5A5A5"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Foreground" Value="#FF332B45" />
                     <Setter Property="Background" Value="#FF897EAD"/>
-                </Trigger>
+                </Trigger>-->
                 <!--定义事件触发器-->
-                <EventTrigger RoutedEvent="Mouse.MouseEnter">
-                    <!--事件触发时只需的操作-->
-                    <!--把动画放在动画面板中-->
+                <!--<EventTrigger RoutedEvent="Mouse.MouseEnter">
+                    --><!--事件触发时只需的操作-->
+                    <!--把动画放在动画面板中--><!--
                     <BeginStoryboard>
-                        <!--在0.2秒的时间内将字体放大到22单位-->
+                        --><!--在0.2秒的时间内将字体放大到22单位--><!--
                         <Storyboard>
                             <DoubleAnimation
                   Duration="0:0:0.1"
@@ -47,7 +39,7 @@
                   To="20"  />
                         </Storyboard>
                     </BeginStoryboard>
-                </EventTrigger>
+                </EventTrigger>-->
                 <!--鼠标移开触发的事件-->
                 <EventTrigger RoutedEvent="Mouse.MouseLeave">
                     <BeginStoryboard>
@@ -60,17 +52,6 @@
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
-                <!--<EventTrigger RoutedEvent="Mouse.MouseClick">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Duration="0:0:0.1"
-                                                 Storyboard.TargetProperty="FontSize"
-                                                 To="16"/>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>-->
             </Style.Triggers>
         </Style>
     </Window.Resources>
@@ -109,6 +90,8 @@
                 </Grid>
             </DockPanel>
         </DockPanel>
+        
+        <!--图片列表的绑定-->
         <ScrollViewer HorizontalAlignment="Left" Height="400" Margin="517.574,10,0,0" VerticalAlignment="Top" Width="270" Background="#FF2E1F3C" PanningMode="Both">
             <StackPanel Width="250">
                 <ListBox Name="lstImg" Width="Auto" Height="400" Background="#FF302348" BorderBrush="{x:Null}">
