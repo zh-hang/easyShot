@@ -86,9 +86,6 @@ namespace easyShot.Pages
             generalData.hide.setHide((bool)HideCheck.IsChecked);
             configManager.setShotFilePath(generalData.Path);
             configManager.setWindowHideMode(generalData.hide.hide);
-            System.Console.WriteLine(configManager.getWindowHideMode().ToString());
-            ConfigManager test = new ConfigManager();
-            System.Console.WriteLine(test.getWindowHideMode().ToString());
             MessageBox.Show("保存成功!");
         }
 

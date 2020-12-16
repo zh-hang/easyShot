@@ -208,7 +208,7 @@ namespace easyShot
                 }
                 else if (kind == "window")
                 {
-                    captureWindow.GetPic_ByHwnd(hWnd).Save(path);
+                    captureWindow.GetPic_Window(hWnd).Save(path);
                 }
             }
             else

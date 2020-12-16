@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace easyShot.Pages
     /// </summary>
     /// 
 
-    
+
 
     public partial class Launch : Page
     {
@@ -66,14 +67,34 @@ namespace easyShot.Pages
             startModeSet.IsChecked = startCheck.ifStart();
         }
 
-        
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             startCheck.setStartMode((bool)startModeSet.IsChecked);
-            System.Console.WriteLine(startCheck.Start.ToString());
             configManager.setStartMode(startCheck.Start);
-            ConfigManager test = new ConfigManager();
-            System.Console.WriteLine(test.getStartMode().ToString());
+            autoStart();
+        }
+
+        //设置开机自启
+        private void autoStart()
+        {
+            try
+            {
+                RegistryKey key = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);//打开注册表项
+                if (key == null)//如果该项不存在的话，则创建该项
+                {
+                    key = Registry.LocalMachine.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
+                }
+                if (startCheck.ifStart() == true)
+                    key.SetValue("easyShot", AppDomain.CurrentDomain);//设置为开机启动
+                else
+                    key.DeleteValue("easyShot");//取消开机启动
+                key.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 }

@@ -9,12 +9,6 @@
         Title="EasyShot" Height="450" Width="800"
     >
     <Window.Resources>
-        <!--<DataTemplate x:Name="settingViewTemplate" DataType="{x:Type viewmodels:SettingViewModel}">
-            <views:SettingView DataContext="{Binding}"/>
-        </DataTemplate>
-        <DataTemplate x:Name="cloudViewTemplate" DataType="{x:Type viewmodels:CloudViewModel}">
-            <views:CloudView DataContext="{Binding}"/>
-        </DataTemplate>-->
 
         <Style x:Key="NavigationButton" TargetType="{x:Type Button}">
             <Setter Property="FontFamily" Value="Times New Roman" />
@@ -23,15 +17,7 @@
 
             <!--样式触发器-->
             <Style.Triggers>
-                <!--获得焦点时触发-->
-                <Trigger Property="IsFocused" Value="True">
-                    <Setter Property="FontSize" Value="20" />
-                    <Setter Property="Foreground" Value="#FFA5A5A5"/>
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="#FF332B45" />
-                    <Setter Property="Background" Value="#FF897EAD"/>
-                </Trigger>
+                
                 <!--定义事件触发器-->
                 <EventTrigger RoutedEvent="Mouse.MouseEnter">
                     <!--事件触发时只需的操作-->
@@ -58,17 +44,6 @@
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
-                <!--<EventTrigger RoutedEvent="Mouse.MouseClick">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Duration="0:0:0.1"
-                                                 Storyboard.TargetProperty="FontSize"
-                                                 To="16"/>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>-->
             </Style.Triggers>
         </Style>
     </Window.Resources>
@@ -94,16 +69,16 @@
                     <Line X1="10" Y1="35" X2="210" Y2="35" Stroke="Black" StrokeThickness="1"/>
                     <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,47.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22.44" Width="120" FontSize="16" FontFamily="Times New Roman" Text="账号"  />
                     <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,104.68,0,0" TextWrapping="Wrap" Text="服务器地址" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
-                    <TextBlock Foreground="Black" HorizontalAlignment="Left" TextWrapping="Wrap" Text="备份" VerticalAlignment="Top" Margin="10,137.28,0,0" FontSize="18" FontFamily="Times New Roman"/>
+                    <!--<TextBlock Foreground="Black" HorizontalAlignment="Left" TextWrapping="Wrap" Text="备份" VerticalAlignment="Top" Margin="10,137.28,0,0" FontSize="18" FontFamily="Times New Roman"/>
                     <Line X1="10" Y1="35" X2="210" Y2="35" Stroke="Black" StrokeThickness="1" Margin="0,127.28,0,-127.28"/>
                     <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,176.573,0,0" TextWrapping="Wrap" Text="自动备份" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
-                    <CheckBox Content="是" HorizontalAlignment="Left" Margin="130,176.573,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.021,-1.378" Height="18.4" Width="81.595" FontSize="14" FontFamily="Times New Roman"/>
+                    <CheckBox Content="是" HorizontalAlignment="Left" Margin="130,176.573,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.021,-1.378" Height="18.4" Width="81.595" FontSize="14" FontFamily="Times New Roman"/>-->
                     <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="10,76.24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22.44" Width="120" FontSize="16" FontFamily="Times New Roman" Text="密码" />
                     <TextBox x:Name="accountBox" HorizontalAlignment="Left" Height="22.44" Margin="130,46.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16" />
                     <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Height="22.44" Margin="130,75.24,0,0"  VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16"/>
                     <TextBox x:Name="addressBox" HorizontalAlignment="Left" Height="22.44" Margin="130,103.68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230.8" FontFamily="Times New Roman" FontSize="16"/>
                     <Button Content="连接" HorizontalAlignment="Left" Margin="365.8,102.16,0,0" VerticalAlignment="Top" Width="78.2" Height="23.44" FontFamily="Times New Roman" FontSize="16" RenderTransformOrigin="0.488,2.09" Click="Connect_Click"/>
-                    <Button Content="强制同步" HorizontalAlignment="Left" Margin="10,274.56,0,0" VerticalAlignment="Top" Width="95" Height="35" FontFamily="Times New Roman" FontSize="16" RenderTransformOrigin="0.488,2.09" Click="Sync_Click"/>
+                    <Button Content="同步" HorizontalAlignment="Left" Margin="10,274.56,0,0" VerticalAlignment="Top" Width="95" Height="35" FontFamily="Times New Roman" FontSize="16" RenderTransformOrigin="0.488,2.09" Click="Sync_Click"/>
                 </Grid>
             </DockPanel>
         </DockPanel>

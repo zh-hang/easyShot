@@ -36,32 +36,27 @@ namespace easyShot
         public Image getPicture() { return this.image; }
 
         //默认构造函数
-        public CaptureWindow()
-        {
-            this.Point_push = new Point(0, 0);
-            this.Point_out = new Point(0, 0);
-        }
+        public CaptureWindow() { }
 
 
         //通过句柄来获取图片
-        public Image GetPic_ByHwnd(IntPtr hWnd)
+        public Image GetPic_ByHwnd(IntPtr hWnd, User32.RECT rect)
         {
+
+
             // 根据句柄获取设备上下文句柄
             IntPtr hdcSrc = User32.GetWindowDC(hWnd);
             // 创建与指定设备兼容的存储器设备上下文(DC)
             IntPtr hdcDest = Gdi32.CreateCompatibleDC(hdcSrc);
-            // 获取窗口大小
-            User32.RECT windowRect = new User32.RECT();
-            User32.GetWindowRect(hWnd, ref windowRect);
+
             //设置长宽
-            int width = windowRect.right - windowRect.left;
-            int height = windowRect.bottom - windowRect.top;
+            int width = rect.right - rect.left;
+            int height = rect.bottom - rect.top;
 
             //图片长宽和起点赋值
             this.width = width;
             this.height = height;
-            this.Point_push.X = 0;
-            this.Point_push.Y = 0;
+
 
             // 使用bitmap对象来存设备上下文数据
             IntPtr hBitmap = Gdi32.CreateCompatibleBitmap(hdcSrc, width, height);
@@ -85,51 +80,55 @@ namespace easyShot
         //通过鼠标前后两个位置来获取图片
         public Image GetPic_ByMouse(IntPtr hWnd)
         {
-
             Image img;
-            // 根据句柄获取设备上下文句柄
-            IntPtr hdcSrc = User32.GetWindowDC(hWnd);
-            // 创建与指定设备兼容的存储器设备上下文(DC)
-            IntPtr hdcDest = Gdi32.CreateCompatibleDC(hdcSrc);
-            // 使用bitmap对象来存设备上下文数据
-            IntPtr hBitmap = Gdi32.CreateCompatibleBitmap(hdcSrc, width, height);
-            // 选择bitmap对象到指定设备上下文环境中
-            IntPtr hOld = Gdi32.SelectObject(hdcDest, hBitmap);
 
-            // 执行与指定源设备上下文的像素矩形对应的颜色数据的位块传输到目标设备上下文
-            Gdi32.BitBlt(hdcDest, this.Point_push.X, this.Point_push.Y, width, height, hdcSrc, 0, 0, Gdi32.SRCCOPY);
 
-            // 恢复设备上下文环境
-            Gdi32.SelectObject(hdcDest, hOld);
-            // 释放句柄
-            Gdi32.DeleteDC(hdcDest);
-            User32.ReleaseDC(hWnd, hdcSrc);
+            // 获取设备上下文环境句柄
+            IntPtr hscrdc = User32.GetWindowDC(hWnd);
 
-            // 将数据流转换成图
-            img = Image.FromHbitmap(hBitmap);
-            // 释放bitmap对象
-            Gdi32.DeleteDC(hdcSrc);
+            // 创建一个与指定设备兼容的内存设备上下文环境（DC）
+            IntPtr hmemdc = Gdi32.CreateCompatibleDC(hscrdc);
+            IntPtr myMemdc = Gdi32.CreateCompatibleDC(hscrdc);
 
-            Gdi32.DeleteObject(hBitmap);
+            // 返回指定窗体的矩形尺寸
+            User32.RECT windowRect = new User32.RECT();
+            User32.GetWindowRect(hWnd, ref windowRect);
+
+            // 返回指定设备环境句柄对应的位图区域句柄
+            IntPtr myBitmap = Gdi32.CreateCompatibleBitmap(hscrdc, width, height);
+            IntPtr hbitmap = Gdi32.CreateCompatibleBitmap(hscrdc, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top);
+
+            //把位图选进内存DC 
+
+            Gdi32.SelectObject(hmemdc, hbitmap);
+            Gdi32.SelectObject(myMemdc, myBitmap);
+
+
+            Gdi32.BitBlt(myMemdc, 0, 0, width, height, hscrdc, Point_push.X, Point_push.Y, Gdi32.SRCCOPY);
+            img = Image.FromHbitmap(myBitmap);
+            Gdi32.DeleteDC(hscrdc);
+            Gdi32.DeleteDC(hmemdc);
+            Gdi32.DeleteDC(myMemdc);
             return img;
         }
         public Image GetPic_Desktop()//获取整个屏幕的图片
         {
             Image img;
-            img = GetPic_ByHwnd(User32.GetDesktopWindow());
+            // 获取窗口大小
+            IntPtr hWnd = User32.GetDesktopWindow();
+            User32.RECT windowRect = new User32.RECT();
+            User32.GetWindowRect(hWnd, ref windowRect);
+            img = GetPic_ByHwnd(hWnd, windowRect);
             return img;
         }
 
-        public Image GetPic_Window()//获取某个窗口的图片
+        public Image GetPic_Window(IntPtr hWnd)//获取某个窗口的图片
         {
             Image img;
-            //一个GetWindowBymouse中的POINTAPI对象
-            GetWindowBymouse.POINTAPI point = new GetWindowBymouse.POINTAPI();
-            //获取当前鼠标的位置
-            GetWindowBymouse.GetCursorPos(ref point);
-            //获取当前鼠标所在的句柄
-            IntPtr hWnd = GetWindowBymouse.WindowFromPoint(point.X, point.Y);
-            img = GetPic_ByHwnd(hWnd);
+
+            User32.RECT windowRect = new User32.RECT();
+            User32.GetWindowRect(hWnd, ref windowRect);
+            img = GetPic_ByHwnd(hWnd, windowRect);
             return img;
         }//根据鼠标位置获取对应窗口的图片
 
@@ -151,21 +150,6 @@ namespace easyShot
 
         }//根据鼠标移动生成的矩形获取对应的图片
 
-
-
-        //public static Image GetPic_AnyShape()
-        //{
-
-        //}
-
-        public IntPtr FindWindow_ByPoint(int x, int y)
-        {
-            IntPtr hWnd;
-            hWnd = GetWindowBymouse.WindowFromPoint(x, y);//根据位置找到对应窗口句柄
-            User32.SetForegroundWindow(hWnd);//根据句柄设置焦点窗口
-            hWnd = User32.GetForegroundWindow();//返回当前焦点窗口的句柄
-            return hWnd;
-        }
 
         public class User32//用来窗口与用户交互
         {
@@ -232,6 +216,7 @@ namespace easyShot
                 public int bottom;
             }
 
+
             //返回桌面窗口（整个屏幕）的句柄
             [DllImport("user32.dll")]
             public static extern IntPtr GetDesktopWindow();
@@ -257,33 +242,6 @@ namespace easyShot
             public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
         }
 
-        public class GetWindowBymouse//根据鼠标位置获取截图
-        {
-            //定义与API相兼容结构体，实际上是一种内存转换
-            [StructLayout(LayoutKind.Sequential)]
-            public struct POINTAPI
-            {
-                public int X;
-                public int Y;
-            }
-            //获取鼠标坐标
-            [DllImport("user32.dll", EntryPoint = "GetCursorPos")]
-            public static extern int GetCursorPos(
-                ref POINTAPI lpPoint
-            );
-
-            //指定坐标处窗体句柄
-            [DllImport("user32.dll", EntryPoint = "WindowFromPoint")]
-            public static extern IntPtr WindowFromPoint(int xPoint, int yPoint);
-
-            //获取坐标处窗口名称
-            [DllImport("user32.dll", EntryPoint = "GetWindowText")]
-            public static extern int GetWindowText(int hWnd, StringBuilder lpString, int nMaxCount);
-
-            //获取窗口类的名称
-            [DllImport("user32.dll", EntryPoint = "GetClassName")]
-            public static extern int GetClassName(int hWnd, StringBuilder lpString, int nMaxCont);
-        }
 
 
         public class Gdi32//用来绘制图片
@@ -294,6 +252,7 @@ namespace easyShot
                               int nWidth, int nHeight, IntPtr hObjectSource,
                               int nXSrc, int nYSrc, int dwRop);
             [DllImport("gdi32.dll")]
+
             public static extern IntPtr CreateCompatibleBitmap(IntPtr hDC, int nWidth,
                               int nHeight);
             [DllImport("gdi32.dll")]
@@ -314,40 +273,5 @@ namespace easyShot
         }
 
 
-
-
-
-    }
-
-    class PictureModify : CaptureWindow
-    {
-
-        private Bitmap bitmap;//位图
-
-
-        //public Bitmap Image_to_Bitmap()
-        //{
-        //    Bitmap bit;
-        //    //Image 转Bitmap
-        //    return this.bitmap = bit;
-        //}
-        //展示图片
-        public void ShowPicture()
-        {
-            Point point = new Point(200, 200);
-            // Graphics.DrawImage(image, point);
-            //image.Dispose();//释放资源
-        }
-        //裁剪图片
-        //public Image CutPictrue()
-        //{
-        //    //this.image;
-        //    return this.image;
-
-        //}
-        //public Image DrawPicture()
-        //{
-        //    this.image =
-        //    }
     }
 }
