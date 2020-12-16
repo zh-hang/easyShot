@@ -49,6 +49,7 @@ namespace easyShot
         private const string serveraccountlabel = "//configuration/serveraccount";
         private const string serverpasswordlabel = "//configuration/serverpassword";
         private const string windowhidemodelabel = "//configuration/windowhidemode";
+        private const string counterlabel = "//configuration/counter";
 
         private System.Xml.XmlDocument configXmlFile;
         private System.Xml.XmlNode root;
