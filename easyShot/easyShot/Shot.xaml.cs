@@ -33,34 +33,7 @@ namespace easyShot
         private int i = 0;
         private IntPtr hWnd;
         private string kind;
-        private bool _started;
 
-
-        /// <summary>
-        /// 以下为几个接口的调用
-        /// </summary>
-        ///
-
-
-        //设置窗口优先级
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern bool SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
-        //获取窗口句柄
-        [DllImport("user32.dll", EntryPoint = "WindowFromPoint")]
-        public static extern IntPtr WindowFromPoint(int xPoint, int yPoint);
-        //获取窗口的范围
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
-
-
-        /// <summary>
-        /// 以下为各种事件
-        /// </summary>
-        ///
-
-
-
-        //鼠标双击事件
         private void MainWindow_Double_MouseDown(object sender, MouseButtonEventArgs e)
         {
             i += 1;
@@ -76,7 +49,6 @@ namespace easyShot
             }
         }
 
-        //鼠标按下事件
         private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
             _started = true;
@@ -84,13 +56,14 @@ namespace easyShot
             _downPoint = System.Windows.Forms.Control.MousePosition;
         }
 
-        //鼠标释放事件
+        private bool _started;
+
+
         private void MainWindow_MouseUp(object sender, MouseButtonEventArgs e)
         {
             _started = false;
         }
 
-        //鼠标移动事件
         private void MainWindow_MouseMove(object sender, MouseEventArgs e)
         {
             if (_started)
@@ -105,7 +78,23 @@ namespace easyShot
             }
         }
 
-        //鼠标选择窗口事件
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            public int left;
+            public int top;
+            public int right;
+            public int bottom;
+        }
+
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern bool SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
+        [DllImport("user32.dll", EntryPoint = "WindowFromPoint")]
+        public static extern IntPtr WindowFromPoint(int xPoint, int yPoint);
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
+
         private void MainWindow_MouseDown_Hide(object sender, MouseButtonEventArgs e)
         {
             WindowState = WindowState.Minimized;
@@ -119,15 +108,6 @@ namespace easyShot
             setBackground();
             WindowState = WindowState.Maximized;
             ifShot = true;
-        }
-
-        //按下Esc键事件
-        private void Grid_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                Close();
-            }
         }
 
 
@@ -153,7 +133,6 @@ namespace easyShot
             }
         }
 
-        //设置背景图
         private void setBackground()
         {
             var bitmap = new System.Drawing.Bitmap(img);
@@ -162,14 +141,6 @@ namespace easyShot
             Background = new ImageBrush(bitmapSource);
         }
 
-
-        /// <summary>
-        /// 以下为截图相关函数
-        /// </summary>
-        /// 
-
-
-        //区域截图
         private void fieldShot()
         {
             MouseDown += MainWindow_MouseDown;
@@ -178,7 +149,7 @@ namespace easyShot
             MouseDown += MainWindow_Double_MouseDown;
         }
 
-        //窗口截图
+
         private void windowShot()
         {
             MouseDown += MainWindow_MouseDown_Hide;
@@ -218,20 +189,11 @@ namespace easyShot
             Close();
         }
 
-
-        /// <summary>
-        /// 以下为按钮点击事件
-        /// </summary>
-        /// 
-
-
-        //取消按钮
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        //保存按钮
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             savePhoto();

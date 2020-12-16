@@ -19,11 +19,11 @@
             <Style.Triggers>
                 
                 <!--定义事件触发器-->
-                <EventTrigger RoutedEvent="Mouse.MouseEnter">
-                    <!--事件触发时只需的操作-->
-                    <!--把动画放在动画面板中-->
+                <!--<EventTrigger RoutedEvent="Mouse.MouseEnter">
+                    --><!--事件触发时只需的操作-->
+                    <!--把动画放在动画面板中--><!--
                     <BeginStoryboard>
-                        <!--在0.2秒的时间内将字体放大到22单位-->
+                        --><!--在0.2秒的时间内将字体放大到22单位--><!--
                         <Storyboard>
                             <DoubleAnimation
                   Duration="0:0:0.1"
@@ -31,7 +31,7 @@
                   To="20"  />
                         </Storyboard>
                     </BeginStoryboard>
-                </EventTrigger>
+                </EventTrigger>-->
                 <!--鼠标移开触发的事件-->
                 <EventTrigger RoutedEvent="Mouse.MouseLeave">
                     <BeginStoryboard>
@@ -82,6 +82,8 @@
                 </Grid>
             </DockPanel>
         </DockPanel>
+        
+        <!--图片列表的绑定-->
         <ScrollViewer HorizontalAlignment="Left" Height="400" Margin="517.574,10,0,0" VerticalAlignment="Top" Width="270" Background="#FF2E1F3C" PanningMode="Both">
             <StackPanel Width="250">
                 <ListBox Name="lstImg" Width="Auto" Height="400" Background="#FF302348" BorderBrush="{x:Null}">
